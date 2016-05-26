@@ -16,7 +16,7 @@ namespace EC2016.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string menu = "guesses")
         {
 
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -27,16 +27,21 @@ namespace EC2016.Controllers
             //ApplicationUser user = DatabaseManager.GetUserById(User.Identity.GetUserId());
             ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
             ViewBag.User = user;
+            ViewBag.menu = menu;
 
-            //using (var ctx = new EC2016CodeFirst())
+            //switch (menu)
             //{
-            //    var t = ctx.Users.ToList().Last();
-            //    DatabaseManager.AddUserToGuessGame(t.Id, 1);
+            //    case "guesses":
+            //        break;
+
+            //    case "teams":
+            //        break;
+
+            //    case "games":
+            //        break;
+            //    default:
+            //        break;
             //}
-            //DatabaseManager.AddTeam("Magyarország",tournamentId);
-            //DatabaseManager.AddTeam("Ausztria",tournamentId);
-            //DatabaseManager.AddTeam("Izland", tournamentId);
-            //DatabaseManager.AddTeam("Portugália", tournamentId);
 
             IndexModel model = new IndexModel();
             List<TeamModel> teams = DatabaseManager.GetAllTeam().Select(t => ModelHelper.CreateTeamModel(t)).ToList();
@@ -88,5 +93,26 @@ namespace EC2016.Controllers
 
             return RedirectToAction("Index","Home");
         }
+
+
+        [HttpGet]
+        public ActionResult Guesses()
+        {
+            return RedirectToAction("Index","Home", new { menu = "guesses"});
+        }
+
+        [HttpGet]
+        public ActionResult Teams()
+        {
+            return RedirectToAction("Index", "Home", new { menu = "teams" });
+        }
+
+
+        [HttpGet]
+        public ActionResult Game()
+        {
+            return RedirectToAction("Index", "Home", new { menu = "games" });
+        }
+
     }
 }

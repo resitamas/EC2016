@@ -1,0 +1,91 @@
+﻿@model EC2016.Models.IndexModel
+
+
+@*@section scripts{
+
+    <script>
+        function teamNameClicked(element) {
+            
+            alert("clicked");
+
+            $(element.nextSibling).toggle();
+
+        }
+    </script>
+
+}*@
+
+@functions {
+
+    public string GetScore(EC2016.Models.MatchModel match, bool isHome)
+    {
+        if (isHome)
+        {
+            return match.HomeScore.HasValue ? match.HomeScore.Value.ToString() : "-";
+
+        }
+        else
+        {
+            return match.AwayScore.HasValue ? match.AwayScore.Value.ToString() : "-";
+        }
+    }
+
+    //public string GetGuess(EC2016.Models.MatchModel match, bool isHome)
+    //{
+    //    EC2016.Models.GuessModel guess = Model.Guesses.Where(g => g.MatchId == match.Id).FirstOrDefault();
+    //    if (guess != null)
+    //    {
+    //        return isHome ? guess.HomeScore.ToString() : guess.AwayScore.ToString();
+    //    }
+    //    return "-";
+    //}
+
+    public string GetMatchGroup(EC2016.Models.MatchModel match)
+    {
+        switch (match.Type)
+        {
+            case Bll.MatchType.FirstRound:
+                return Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Group.First().ToString() + "1";
+            case Bll.MatchType.SecondRound:
+                return Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Group.First().ToString() + "2";
+            case Bll.MatchType.ThirdRound:
+                return Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Group.First().ToString() + "3";
+            case Bll.MatchType.SemiQuaerterFinal:
+                return "NYD";
+            case Bll.MatchType.QuarterFinal:
+                return "ND";
+            case Bll.MatchType.SemiFinal:
+                return "ED";
+            case Bll.MatchType.Final:
+                return "D";
+            default:
+                return "I";
+
+        }
+    }
+
+}
+
+@foreach (var team in Model.Teams)
+{
+    <h4 style="cursor:pointer" onclick="teamNameClicked(this)">@team.Name</h4>
+    var matches = Model.Matches.Where(m => m.HomeTeamId == team.Id || m.AwayTeamId == team.Id).OrderBy(m => m.Date).ToList();
+    <div style="display:none;">
+        @foreach (var match in matches)
+        {
+        <table border="1" style="margin: 0 auto; margin-top:10px">
+            <tr>
+                <td rowspan="2" style="width:150px">@String.Format("{2} {0}:{1}", match.Date.TimeOfDay.Hours, match.Date.TimeOfDay.Minutes == 0 ? "00" : match.Date.TimeOfDay.Minutes.ToString(), match.Date.ToShortDateString())</td>
+                <td rowspan="2" style="width:40px">@GetMatchGroup(match)</td>
+                <td style="width:125px">@Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Name</td>
+                <td style="width:25px">@GetScore(match, true)</td>
+            </tr>
+            <tr>
+                <td>@Model.Teams.Where(t => t.Id == match.AwayTeamId).First().Name</td>
+                <td>@GetScore(match, false)</td>
+            </tr>
+        </table>
+
+        }
+    </div>
+}

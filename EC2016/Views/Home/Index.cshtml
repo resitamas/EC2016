@@ -14,6 +14,14 @@
             $(".sidediv").css({ "height": height / 3 });
             $(".centerdiv").css({ "height": (height / 3)});
         });
+
+        function teamNameClicked(element) {
+
+            //$(element).text('there');
+            $(element).next().toggle();
+
+        }
+
     </script>
 }
 
@@ -70,12 +78,15 @@
     <h2>@ViewBag.user.UserName</h2>
 </div>
 
-<nav class="navbar navbar-default" style="max-width:280px; position:fixed; top:75px; left: 50%; margin-left: -140px">
-    <div class="container-fluid">
+<nav class="navbar navbar-default" style="max-width:280px; width:280px; position:fixed; top:75px; left: 50%; margin-left: -140px">
+    <div class="container-fluid" style="text-align:center">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Mérkőzése</a></li>
+            @*<li class="active"><a href="#">Mérkőzése</a></li>
             <li><a href="#">Csapattok</a></li>
-            <li><a href="#">Játék</a></li>
+            <li><a href="#">Játék</a></li>*@
+            <li style="text-align:center; width:92px" >@Html.ActionLink("Tippelés", "Guesses", "Home")</li>
+            <li style="text-align:center; width:92px">@Html.ActionLink("Csapatok", "Teams", "Home")</li>
+            <li style="width:93px">@Html.ActionLink("Játék","Game","Home")</li>
         </ul>
     </div>
 </nav>
@@ -83,8 +94,28 @@
 <div style="align-content:center; text-align:center; margin-top:100px">
     <div style="align-content:center; text-align:center; background-color:burlywood; width:400px; margin: 0 auto">
         <br />
-        <h3 style="align-content:center; text-align:center">Mérkőzések</h3>
-        @Html.Partial("~/Views/Home/_Matches.cshtml", Model)
+        
+        <div id="mainContent">
+            @if (ViewBag.menu == "guesses")
+            {
+                <h3 style="align-content:center; text-align:center">Mérkőzések</h3>
+                @Html.Partial("~/Views/Home/_Matches.cshtml", Model);
+            }
+            else
+            {
+                if (ViewBag.menu == "teams")
+                {
+                    <h3 style="align-content:center; text-align:center">Csapatok</h3>
+                    @Html.Partial("~/Views/Home/_Teams.cshtml",Model);
+                }
+                else
+                {
+                    <h3 style="align-content:center; text-align:center">Tippjáték</h3>
+                    @Html.Partial("~/Views/Home/_Games.cshtml",Model);
+                }
+            }
+
+        </div>
     </div>
 </div>
 
