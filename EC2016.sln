@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EC2016", "EC2016\EC2016.csproj", "{10122AD9-9ACE-4D51-B378-B6AA7D878FA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{041F5FE5-BFCA-46EC-83AF-5E86277A13E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{91F9D8A9-24BF-4A4F-B045-68A46369F25F}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1 = PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{C6298494-9F85-47ED-8360-6C9945E3C5D8}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Templates\EC2016.json = PublishScripts\Templates\EC2016.json
+		PublishScripts\Templates\EC2016.param.dev.json = PublishScripts\Templates\EC2016.param.dev.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bll", "Bll\Bll.csproj", "{FB0D5744-9D3D-47B2-B9B9-57B636C717E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10122AD9-9ACE-4D51-B378-B6AA7D878FA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10122AD9-9ACE-4D51-B378-B6AA7D878FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10122AD9-9ACE-4D51-B378-B6AA7D878FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10122AD9-9ACE-4D51-B378-B6AA7D878FA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB0D5744-9D3D-47B2-B9B9-57B636C717E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB0D5744-9D3D-47B2-B9B9-57B636C717E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB0D5744-9D3D-47B2-B9B9-57B636C717E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB0D5744-9D3D-47B2-B9B9-57B636C717E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{91F9D8A9-24BF-4A4F-B045-68A46369F25F} = {041F5FE5-BFCA-46EC-83AF-5E86277A13E2}
+		{C6298494-9F85-47ED-8360-6C9945E3C5D8} = {041F5FE5-BFCA-46EC-83AF-5E86277A13E2}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,249 @@
+﻿@model EC2016.Models.IndexModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var width = $("#cntr").width();
+            var height = $("#cntr").height();
+            $(".sidediv").css({ "width": width / 4 });
+            $(".centerdiv").css({ "width": (width / 2) - 10 });
+            $(".sidediv").css({ "height": height / 3 });
+            $(".centerdiv").css({ "height": (height / 3)});
+        });
+    </script>
+}
+
+<div style="height:170px; width:240px; position:fixed; top:20px; left: 100px;">
+    <div>
+        <h4>A Csoport</h4>
+    </div>
+    <div style="height:150px">
+        @Html.Partial("~/Views/Home/Table.cshtml", Model.ATeams)
+    </div>
+</div>
+<div style="height:170px; width:240px; position:fixed; top:50%; left:100px; margin-top:-85px">
+    <div>
+        <h4>B Csoport</h4>
+    </div>
+    <div style="height:150px">
+        @Html.Partial("~/Views/Home/Table.cshtml", Model.BTeams)
+    </div>
+</div>
+<div style="height:170px; width:240px; position:fixed; bottom:20px; left:100px;">
+    <div>
+        <h4>C Csoport</h4>
+    </div>
+    <div style="height:150px">
+        @Html.Partial("~/Views/Home/Table.cshtml", Model.CTeams)
+    </div>
+</div>
+<div style="height:170px; width:240px; position:fixed; top:20px; right:100px;">
+    <div>
+        <h4>D Csoport</h4>
+    </div>
+    <div style="height:150px">
+        @Html.Partial("~/Views/Home/Table.cshtml", Model.DTeams)
+    </div>
+</div>
+<div style="height:170px; width:240px; position:fixed; top:50%; right:100px; margin-top:-85px">
+    <div>
+        <h4>E Csoport</h4>
+    </div>
+    <div style="height:150px">
+        @Html.Partial("~/Views/Home/Table.cshtml", Model.ETeams)
+    </div>
+</div>
+<div style="height:170px; width:240px; position:fixed; bottom:20px; right:100px;">
+    <div>
+        <h4>F Csoport</h4>
+    </div>
+    <div style="height:150px">
+        @Html.Partial("~/Views/Home/Table.cshtml", Model.FTeams)
+    </div>
+</div>
+
+<div style="align-content:center; text-align:center; position:fixed; height:100px; width:400px; margin-top:0px; left: 50%; margin-left: -200px; background-color:azure; z-index:100">
+    <h2>@ViewBag.user.UserName</h2>
+</div>
+
+<nav class="navbar navbar-default" style="max-width:280px; position:fixed; top:75px; left: 50%; margin-left: -140px">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Mérkőzése</a></li>
+            <li><a href="#">Csapattok</a></li>
+            <li><a href="#">Játék</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div style="align-content:center; text-align:center; margin-top:100px">
+    <div style="align-content:center; text-align:center; background-color:burlywood; width:400px; margin: 0 auto">
+        <br />
+        <h3 style="align-content:center; text-align:center">Mérkőzések</h3>
+        @Html.Partial("~/Views/Home/_Matches.cshtml", Model)
+    </div>
+</div>
+
+
+@*<div id="cntr">
+    <div class="sidediv" style="display:inline-block; background-color:rebeccapurple; height:100px ">
+        <div>
+            <span>A Csoport</span>
+        </div>
+        <div style="height:150px">
+            @Html.Partial("~/Views/Home/Table.cshtml", Model.ATeams)
+        </div>
+    </div>
+    <div class="centerdiv" style="display:inline-block; background-color:blanchedalmond;height:100px">
+
+    </div>
+    <div class="sidediv" style="display:inline-block;background-color:coral;height:100px">
+
+    </div>
+    <br />
+    <div class="sidediv" style="display:inline-block; background-color:rebeccapurple; width:100px; height:100px ">
+
+    </div>
+    <div class="centerdiv" style="display:inline-block; background-color:blanchedalmond;width:100px;height:100px">
+
+    </div>
+    <div class="sidediv" style="display:inline-block;background-color:coral;width:100px;height:100px">
+
+    </div>
+    <br />
+    <div class="sidediv" style="display:inline-block; background-color:rebeccapurple; width:100px; height:100px ">
+
+    </div>
+    <div class="centerdiv" style="display:inline-block; background-color:blanchedalmond;width:100px;height:100px">
+
+    </div>
+    <div class="sidediv" style="display:inline-block; background-color:coral;width:100px;height:100px">
+
+    </div>
+</div>
+
+<h3 style="text-align:center">Mérkőzések</h3>*@
+
+
+@*<div style="background-color:aqua ;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3" style="background-color:red;">
+                <div>
+                    <h4>A Csoport</h4>
+                </div>
+                <div style="height:150px">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.ATeams)
+                </div>
+                <div>
+                    <h4>B Csoport</h4>
+                </div>
+                <div style="height:150px;background-color:green;">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.BTeams)
+                </div>
+                <div>
+                    <h4>C Csoport</h4>
+                </div>
+                <div style="height:150px">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.CTeams)
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-3" style="background-color:red;">
+                <div>
+                    <h4>D Csoport</h4>
+                </div>
+                <div style="height:150px">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.DTeams)
+                </div>
+                <div>
+                    <h4>E Csoport</h4>
+                </div>
+                <div style="height:150px;background-color:green;">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.ETeams)
+                </div>
+                <div>
+                    <h4>F Csoport</h4>
+                </div>
+                <div style="height:150px">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.FTeams)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+@*<div style="background-color:aqua ;" >
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3" style="background-color:red;">
+                <div>
+                    <h4>A Csoport</h4>
+                </div>
+                <div style="height:150px">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.ATeams)
+                </div>
+                <div>
+                    <h4>B Csoport</h4>
+                </div>
+                <div style="height:150px;background-color:green;">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.BTeams)
+                </div>
+                <div>
+                    <h4>C Csoport</h4>
+                </div>
+                <div style="height:150px">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.CTeams)
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-3" style="background-color:red;">
+                <div>
+                    <h4>D Csoport</h4>
+                </div>
+                <div style="height:150px">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.DTeams)
+                </div>
+                <div>
+                    <h4>E Csoport</h4>
+                </div>
+                <div style="height:150px;background-color:green;">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.ETeams)
+                </div>
+                <div>
+                    <h4>F Csoport</h4>
+                </div>
+                <div style="height:150px">
+                    @Html.Partial("~/Views/Home/Table.cshtml", Model.FTeams)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+@*<div class="container">
+    <div class="row">
+        <div class="col-md-3" style="background-color:red;">
+            
+        </div>
+        <div class="col-md-6">
+            <h3>Mérkőzések</h3>
+        </div>
+        <div class="col-md-3" style="background-color:red;">
+            
+        </div>
+    </div>
+</div>*@
+
+
+

@@ -1,0 +1,128 @@
+﻿@model EC2016.Models.IndexModel
+
+@functions {
+
+    public string GetScore(EC2016.Models.MatchModel match, bool isHome)
+    {
+        if (isHome)
+        {
+            return match.HomeScore.HasValue ? match.HomeScore.Value.ToString() : "-";
+
+        }
+        else
+        {
+            return match.AwayScore.HasValue ? match.AwayScore.Value.ToString() : "-";
+        }
+    }
+
+    public string GetGuess(EC2016.Models.MatchModel match, bool isHome)
+    {
+        EC2016.Models.GuessModel guess = Model.Guesses.Where(g => g.MatchId == match.Id).FirstOrDefault();
+        if (guess != null)
+        {
+            return isHome ? guess.HomeScore.ToString() : guess.AwayScore.ToString();
+        }
+        return "-";
+    }
+
+    public string GetMatchGroup(EC2016.Models.MatchModel match)
+    {
+        switch (match.Type)
+        {
+            case Bll.MatchType.FirstRound:
+                return Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Group.First().ToString() + "1";
+            case Bll.MatchType.SecondRound:
+                return Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Group.First().ToString() + "2";
+            case Bll.MatchType.ThirdRound:
+                return Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Group.First().ToString() + "3";
+            case Bll.MatchType.SemiQuaerterFinal:
+                return "NYD";
+            case Bll.MatchType.QuarterFinal:
+                return "ND";
+            case Bll.MatchType.SemiFinal:
+                return "ED";
+            case Bll.MatchType.Final:
+                return "D";
+            default:
+                return "I";
+
+        }
+    }
+
+}
+
+@{
+    int i = 0;
+        List<EC2016.Models.MatchModel> matches = Model.Matches;
+        List<EC2016.Models.TeamModel> teams = Model.Teams;
+    while (i < matches.Count)
+    {
+
+        <h4>@matches.ElementAt(i).Date.ToShortDateString()</h4>
+        int j = i;
+        while (j < matches.Count && matches.ElementAt(i).Date.Date == matches.ElementAt(j).Date.Date)
+        {
+            <table style="margin: 0 auto; margin-top:10px;" @*border="1"*@>
+                @using (Html.BeginForm("Guess", "Home", FormMethod.Post))
+                {
+                <tr>
+                    <td colspan="3"></td>
+                    <td colspan="1" style="border-left:1px solid black; border-right:1px solid black;border-top:1px solid black">Eredmény</td>
+                    <td colspan="1" style="border-right:1px solid black;border-top:1px solid black">Tippem</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td rowspan="2" width="55px" style="border:1px solid black;">@String.Format("{0}:{1}", matches.ElementAt(j).Date.TimeOfDay.Hours, matches.ElementAt(j).Date.TimeOfDay.Minutes == 0 ? "00" : matches.ElementAt(j).Date.TimeOfDay.Minutes.ToString())</td>
+                    <td rowspan="2" style="width:25px;border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@GetMatchGroup(matches.ElementAt(j))</td>
+                    <td width="120px" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@teams.Where(t => t.Id == matches.ElementAt(j).HomeTeamId).First().Name</td>
+                    <td width="50px" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@GetScore(matches.ElementAt(j), true)</td>
+                    <td width="50px" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@GetGuess(matches.ElementAt(j), true)</td>
+                    @*@using (Html.BeginForm("Guess", "Home", FormMethod.Post))
+                    {*@
+                        @Html.ValidationSummary(true)
+                        <td rowspan="2" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black"><button type="submit" onclick="">Tipp</button><input type="hidden" value="@matches.ElementAt(j).Id" name="matchId" /></td>
+                        <td style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black"><input maxlength="2" name="homeScore" autocomplete="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="width:25px;"/></td>
+                    @*}*@
+                </tr>
+                <tr>
+                    @*<td style="width:25px; border-right:1px solid black;border-bottom:1px solid black">@GetMatchGroup(matches.ElementAt(j))</td>*@
+                    <td style="border-right:1px solid black;border-bottom:1px solid black">@teams.Where(t => t.Id == matches.ElementAt(j).AwayTeamId).First().Name</td>
+                    <td style="border-right:1px solid black;border-bottom:1px solid black">@GetScore(matches.ElementAt(j), false)</td>
+                    <td style="border-bottom:1px solid black">@GetGuess(matches.ElementAt(j), false)</td>
+                    <td style="border-bottom:1px solid black; border-right:1px solid black"><input name="awayScore" style="width:25px;" autocomplete="off" /></td>
+                </tr>
+                }
+            </table>
+
+
+            @*<table style="margin: 0 auto; margin-top:10px">
+                <tr>
+                    <td colspan="3"></td>
+                    <td colspan="2" style="border-left:1px; border-right:1px;border-top:1px">Eredmény</td>
+                    <td colspan="2" style="border-right:1px;border-top:1px">Tippem</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr style="border:1px">
+                    <td width="55px">@String.Format("{0}:{1}", matches.ElementAt(j).Date.TimeOfDay.Hours, matches.ElementAt(j).Date.TimeOfDay.Minutes == 0 ? "00" : matches.ElementAt(j).Date.TimeOfDay.Minutes.ToString())</td>
+                    <td width="120px">@teams.Where(t => t.Id == matches.ElementAt(j).HomeTeamId).First().Name</td>
+                    <td width="120px">@teams.Where(t => t.Id == matches.ElementAt(j).AwayTeamId).First().Name</td>
+                    <td width="50px">@GetScore(matches.ElementAt(j),true)</td>
+                    <td width="50px">@GetScore(matches.ElementAt(j), false)</td>
+                    <td width="50px">-</td>
+                    <td width="50px">-</td>
+                    <td><button>Tipp</button></td>
+                    <td><input style="width:25px; display:inline-block" /><input style="width:25px;display:inline-block" /></td>
+                </tr>
+            </table>*@
+            @*<div style="text-align:left;">
+                <span>@matches.ElementAt(j).Date.TimeOfDay</span>
+                <span>: </span>
+                <span>@teams.Where(t => t.Id == matches.ElementAt(j).HomeTeamId).First().Name</span>
+                <span>@teams.Where(t => t.Id == matches.ElementAt(j).AwayTeamId).First().Name</span>
+            </div>*@
+            j++;
+        }
+        <br />
+        i = j;
+    }
+}

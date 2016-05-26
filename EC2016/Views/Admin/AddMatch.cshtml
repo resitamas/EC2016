@@ -1,0 +1,50 @@
+﻿@model EC2016.Models.AddMatchModel
+@{
+    ViewBag.Title = "AddMatches";
+}
+
+@section scripts {
+
+<script type="text/javascript">
+    $(function () { // will trigger when the document is ready
+        $('.datepicker').datepicker('setDate', @DateTime.Now); //Initialise any date pickers
+    });
+</script>
+}
+
+
+
+<br />
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(m => m.TournamentSelectedId)
+    @Html.DropDownListFor(m => m.TournamentSelectedId, Model.TournamentList)
+    @Html.ValidationMessageFor(m => m.TournamentSelectedId)
+    @Html.LabelFor(m => m.HomeTeamSelectedId)
+    @Html.DropDownListFor(m => m.HomeTeamSelectedId, Model.HomeTeamList)
+    @Html.ValidationMessageFor(m => m.HomeTeamSelectedId)
+    @Html.LabelFor(m => m.AwayTeamSelectedId)
+    @Html.DropDownListFor(m => m.AwayTeamSelectedId, Model.AwayTeamList)
+    @Html.ValidationMessageFor(m => m.AwayTeamSelectedId)
+    @Html.LabelFor(m => m.Type)
+    @Html.DropDownListFor(m => m.Type, Model.TypesList)
+    @Html.ValidationMessageFor(m => m.Type)
+    @Html.LabelFor(m => m.Date)
+    @Html.TextBoxFor(m => m.Date, new { @class = "datepicker", placeholder = "Enter Drop-off date here..." })
+    @Html.ValidationMessageFor(m => m.Date)
+
+    <input type="submit" value="Hozzáadás" />
+}
+
+
+
+
+@*@foreach (var item in Model.Teams)
+{
+    <p>@item.Name</p>
+    <br />
+}*@
+
+
