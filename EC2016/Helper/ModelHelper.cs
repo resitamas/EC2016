@@ -49,15 +49,15 @@ namespace EC2016.Helper
             return model;
         }
 
-        //public static UserModel CreateUserModel(User u)
-        //{
-        //    UserModel model = new UserModel();
-        //    model.Id = u.Id;
-        //    model.Name = u.Name;
-        //    model.PasswordHash = u.PasswordHash;
+        public static UserModel CreateUserModel(ApplicationUser u)
+        {
+            UserModel model = new UserModel();
+            model.Id = u.Id;
+            model.Name = u.UserName;
+            model.PasswordHash = u.PasswordHash;
 
-        //    return model;
-        //}
+            return model;
+        }
 
         public static GuessGameModel CreateGuessGameModel(GuessGame g)
         {

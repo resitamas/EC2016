@@ -64,9 +64,17 @@ namespace Bll
         {
             using (var db = new EC2016CodeFirst())
             {
-                return db.Users.Where(u => u.GuessGames.Select(g => g.Id).Contains(guessGameId)).ToList();
+                return db.Users.Include("Guesses").Where(u => u.GuessGames.Select(g => g.Id).Contains(guessGameId)).ToList();
             }
         }
+
+        //public static IEnumerable<ApplicationUser> GetUsersWithGuessesByGuessGame(int guessGamedId)
+        //{
+        //    using (var db = new EC2016CodeFirst())
+        //    {
+        //        return db.Users.Where(u => u.GuessGames.Select(g => g.Id).Contains(guessGamedId));
+        //    }
+        //}
 
         #endregion
 

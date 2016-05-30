@@ -34,6 +34,16 @@ namespace EC2016.Models
             }
         }
 
+        public List<UserGuesses> UsersWithGuesses { get; set; }
+
+        public class UserGuesses
+        {
+            public UserModel User { get; set; }
+
+            public IEnumerable<GuessModel> Guesses { get; set; }
+
+
+        }
 
     }
 }

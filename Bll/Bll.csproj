@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseManager.cs" />
+    <Compile Include="GuessPoint.cs" />
     <Compile Include="MatchType.cs" />
     <Compile Include="Migrations\201605231859267_Mukodj.cs" />
     <Compile Include="Migrations\201605231859267_Mukodj.Designer.cs">

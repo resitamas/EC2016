@@ -1,4 +1,60 @@
-﻿@model EC2016.Models.IndexModel
+﻿@using EC2016.Models;
+@using System;
+@model IndexModel
+
+@functions {
+
+    public PlayerStatModel GetPlayerStatsFromGuesses(List<GuessModel> guesses)
+    {
+        PlayerStatModel playerStats = new PlayerStatModel();
+
+        foreach (var guess in guesses)
+        {
+            MatchModel match = Model.Matches.Where(m => m.Id == guess.MatchId).First();
+
+            if (match.HomeScore.HasValue) //game has been playing
+            {
+                if (match.HomeScore.Value == guess.HomeScore && match.AwayScore.Value == guess.AwayScore)
+                {
+                    playerStats.TT++;
+                }
+                else
+                {
+                    if (Math.Abs(match.HomeScore.Value - match.AwayScore.Value) == Math.Abs(guess.HomeScore - guess.AwayScore) &&  ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore) || (match.HomeScore.Value <= match.AwayScore.Value && guess.HomeScore <= guess.AwayScore)))
+                    {
+                        playerStats.GK++;
+                    }
+                    else
+                    {
+                        if ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore) || (match.HomeScore.Value <= match.AwayScore.Value && guess.HomeScore <= guess.AwayScore))
+                        {
+                            playerStats.MK++;
+                        }
+                        else
+                        {
+                            if (match.HomeScore.Value == guess.HomeScore || match.AwayScore.Value == guess.AwayScore)
+                            {
+                                playerStats.CSG++;
+                            }
+                            else
+                            {
+                                if (match.HomeScore.Value + match.AwayScore.Value == guess.HomeScore + guess.AwayScore)
+                                {
+                                    playerStats.OG++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+        return playerStats;
+
+    }
+}
 
 <div style="font-size:11px; text-align:left">
     <b>Telitalálat (TT): (10 pont)<br /> </b><span>Az eredmény tökéletes eltalálása</span><br />
@@ -9,18 +65,41 @@
 
 </div>
 
-<table border="1">
+<table border="1" style="margin: 0 auto;">
     <tr>
-        <th>H</th>
-        <th>Játékos</th>
-        <th>TT</th>
-        <th>GK</th>
-        <th>MK</th>
-        <th>CSG</th>
-        <th>ÖG</th>
-        <th>Összpont</th>
+        <th style="width:30px; text-align:center">H</th>
+        <th style="width:160px; text-align:center">Játékos</th>
+        <th style="width:35px; text-align:center">TT</th>
+        <th style="width:35px; text-align:center">GK</th>
+        <th style="width:35px; text-align:center">MK</th>
+        <th style="width:35px; text-align:center">CSG</th>
+        <th style="width:35px; text-align:center">ÖG</th>
+        <th style="width:35px; text-align:center">P</th>
     </tr>
 
+    @{ List<PlayerStatModel> playerStatsModel = new List<PlayerStatModel>();}
+
+    @foreach (var m in Model.UsersWithGuesses)
+    {
+        PlayerStatModel playerStats = GetPlayerStatsFromGuesses(m.Guesses.ToList());
+        playerStats.UserName = m.User.Name;
+        playerStatsModel.Add(playerStats);
+    }
+
+    @{int i = 1;}
+    @foreach (var m in playerStatsModel.OrderByDescending(p => p.Points))
+    {
+        <tr>
+            <td>@(i++)</td>
+            <td>@m.UserName</td>
+            <td>@m.TT</td>
+            <td>@m.GK</td>
+            <td>@m.MK</td>
+            <td>@m.CSG</td>
+            <td>@m.OG</td>
+            <td>@m.Points</td>
+        </tr>
+    }
 
 </table>
 

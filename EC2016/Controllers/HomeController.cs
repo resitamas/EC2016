@@ -19,6 +19,7 @@ namespace EC2016.Controllers
         public ActionResult Index(string menu = "guesses")
         {
 
+
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 return Redirect("~/Account/Login");
@@ -29,24 +30,51 @@ namespace EC2016.Controllers
             ViewBag.User = user;
             ViewBag.menu = menu;
 
-            //switch (menu)
-            //{
-            //    case "guesses":
-            //        break;
+            //DatabaseManager.AddUserToGuessGame(user.Id,1);
 
-            //    case "teams":
-            //        break;
-
-            //    case "games":
-            //        break;
-            //    default:
-            //        break;
-            //}
 
             IndexModel model = new IndexModel();
-            List<TeamModel> teams = DatabaseManager.GetAllTeam().Select(t => ModelHelper.CreateTeamModel(t)).ToList();
-            List<MatchModel> matches = DatabaseManager.GetAllMatches().Select(m => ModelHelper.CreateMatchModel(m)).ToList();
-            List<GuessModel> userGuesses = user.Guesses.ToList().Select(g => ModelHelper.CreateGuessModel(g)).ToList();
+            List<TeamModel> teams;
+            List<MatchModel> matches;
+
+            switch (menu)
+            {
+                case "guesses":
+
+                    model.Guesses = user.Guesses.ToList().Select(g => ModelHelper.CreateGuessModel(g)).ToList();
+
+                    break;
+
+                case "teams":
+
+
+                    break;
+
+                case "games":
+
+                    teams = new List<TeamModel>();
+                    IEnumerable<ApplicationUser> users = DatabaseManager.GetUsersByGuessGame(1);
+
+                    model.UsersWithGuesses = new List<IndexModel.UserGuesses>();
+                    foreach (var u in users)
+                    {
+                        IndexModel.UserGuesses ug = new IndexModel.UserGuesses();
+                        ug.User = ModelHelper.CreateUserModel(u);
+                        ug.Guesses = u.Guesses.Select(g => ModelHelper.CreateGuessModel(g));
+
+                        model.UsersWithGuesses.Add(ug);
+                    }
+
+                    break;
+
+
+                default:
+                    teams = new List<TeamModel>();
+                    break;
+            }
+
+            matches = DatabaseManager.GetAllMatches().Select(m => ModelHelper.CreateMatchModel(m)).ToList();
+            teams = DatabaseManager.GetAllTeam().Select(t => ModelHelper.CreateTeamModel(t)).ToList();
 
             model.ATeams = ModelHelper.CreateGorupTable(teams.Where(t => t.Group == "A").ToList(), matches);
             model.BTeams = ModelHelper.CreateGorupTable(teams.Where(t => t.Group == "B").ToList(), matches);
@@ -56,7 +84,6 @@ namespace EC2016.Controllers
             model.FTeams = ModelHelper.CreateGorupTable(teams.Where(t => t.Group == "F").ToList(), matches);
 
             model.Matches = matches;
-            model.Guesses = userGuesses;
 
             return View(model);
         }
