@@ -21,7 +21,7 @@ namespace EC2016.Models
 
         public int Get { get; set; }
 
-        public int Poins { get; set; }
+        public int Points { get; set; }
 
         public int Win { get; set; }
 

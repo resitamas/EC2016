@@ -99,7 +99,8 @@ namespace EC2016.Helper
                             team.Get += match.AwayScore.Value;
                             if (match.HomeScore > match.AwayScore)
                             {
-                                team.Poins += 3;
+                                team.Points += 3;
+                                team.Win++;
                             }
                         }
                         else
@@ -108,23 +109,26 @@ namespace EC2016.Helper
                             team.Get += match.HomeScore.Value;
                             if (match.AwayScore > match.HomeScore)
                             {
-                                team.Poins += 3;
+                                team.Points += 3;
+                                team.Win++;
                             }
                         }
                         if (match.HomeScore == match.AwayScore)
                         {
-                            team.Poins += 1;
+                            team.Points += 1;
+                            team.Draw++;
                         }
                         team.Count++;
                     }
                 }
             }
 
-            teams = teams.OrderByDescending(t => t.Poins).ThenByDescending(t => t.Scored - t.Get).ThenByDescending(t => t.Scored).ToList();
+            teams = teams.OrderByDescending(t => t.Points).ThenByDescending(t => t.Scored - t.Get).ThenByDescending(t => t.Scored).ToList();
 
             int i = 1;
             foreach (var t in teams)
             {
+                t.Loose = t.Count - (t.Draw + t.Win);
                 t.Position = i++;
             }
 
