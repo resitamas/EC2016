@@ -73,18 +73,22 @@
     <div style="display:none;">
         @foreach (var match in matches)
         {
-        <table border="1" style="margin: 0 auto; margin-top:10px">
-            <tr>
-                <td rowspan="2" style="width:150px">@String.Format("{2} {0}:{1}", match.Date.TimeOfDay.Hours, match.Date.TimeOfDay.Minutes == 0 ? "00" : match.Date.TimeOfDay.Minutes.ToString(), match.Date.ToShortDateString())</td>
-                <td rowspan="2" style="width:40px">@GetMatchGroup(match)</td>
-                <td style="width:125px">@Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Name</td>
-                <td style="width:25px">@GetScore(match, true)</td>
-            </tr>
-            <tr>
-                <td>@Model.Teams.Where(t => t.Id == match.AwayTeamId).First().Name</td>
-                <td>@GetScore(match, false)</td>
-            </tr>
-        </table>
+            if (match.IsConfirmed)
+            {
+                <table border="1" style="margin: 0 auto; margin-top:10px">
+                    <tr>
+                        <td rowspan="2" style="width:150px">@String.Format("{2} {0}:{1}", match.Date.TimeOfDay.Hours, match.Date.TimeOfDay.Minutes == 0 ? "00" : match.Date.TimeOfDay.Minutes.ToString(), match.Date.ToShortDateString())</td>
+                        <td rowspan="2" style="width:40px">@GetMatchGroup(match)</td>
+                        <td style="width:125px">@Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Name</td>
+                        <td style="width:25px">@GetScore(match, true)</td>
+                    </tr>
+                    <tr>
+                        <td>@Model.Teams.Where(t => t.Id == match.AwayTeamId).First().Name</td>
+                        <td>@GetScore(match, false)</td>
+                    </tr>
+                </table>
+
+            }
 
         }
     </div>

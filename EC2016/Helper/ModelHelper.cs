@@ -33,6 +33,7 @@ namespace EC2016.Helper
             model.AwayTeamId = m.AwayTeamId;
             model.AwayScore = m.AwayScore;
             model.Date = m.Date;
+            model.IsConfirmed = m.isConfirmed;
 
             return model;
         }

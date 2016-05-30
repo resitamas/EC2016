@@ -68,14 +68,14 @@ namespace Bll
             }
         }
 
-        //public static IEnumerable<ApplicationUser> GetUsersWithGuessesByGuessGame(int guessGamedId)
-        //{
-        //    using (var db = new EC2016CodeFirst())
-        //    {
-        //        return db.Users.Where(u => u.GuessGames.Select(g => g.Id).Contains(guessGamedId));
-        //    }
-        //}
-
+        public static Match GetMatchById(int matchId)
+        {
+            using (var db = new EC2016CodeFirst())
+            {
+                return db.Matches.Where(m => m.Id == matchId).First();
+            }
+        }
+        
         #endregion
 
         #region POST

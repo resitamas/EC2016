@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201605252150228_Nothin.Designer.cs">
       <DependentUpon>201605252150228_Nothin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605301846078_Match.cs" />
+    <Compile Include="Migrations\201605301846078_Match.Designer.cs">
+      <DependentUpon>201605301846078_Match.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ApplicationUser.cs" />
     <Compile Include="Model\EC2016CodeFirst.cs" />
@@ -115,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605252150228_Nothin.resx">
       <DependentUpon>201605252150228_Nothin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605301846078_Match.resx">
+      <DependentUpon>201605301846078_Match.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

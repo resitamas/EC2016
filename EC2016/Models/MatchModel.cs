@@ -13,10 +13,12 @@ namespace EC2016.Models
 
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
-        public System.DateTime Date { get; set; }
+        public DateTime Date { get; set; }
         public string Type { get; set; }
         public Nullable<int> HomeScore { get; set; }
         public Nullable<int> AwayScore { get; set; }
+
+        public bool IsConfirmed { get; set; }
 
         public string Round
         {

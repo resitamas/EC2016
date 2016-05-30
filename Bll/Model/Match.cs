@@ -33,6 +33,8 @@ namespace Bll.Model
 
         public int? AwayScore { get; set; }
 
+        public bool isConfirmed { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Guess> Guesses { get; set; }
 

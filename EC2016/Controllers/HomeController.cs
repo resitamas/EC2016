@@ -105,6 +105,13 @@ namespace EC2016.Controllers
         [HttpPost]
         public ActionResult Guess(int matchId, int? homeScore, int? awayScore)
         {
+
+            if (DatabaseManager.GetMatchById(matchId).Date.CompareTo(DateTime.UtcNow.AddHours(2).AddMinutes(-5)) < 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             int hScore = homeScore.HasValue ? homeScore.Value : 0;
             int aScore = awayScore.HasValue ? awayScore.Value : 0;
 

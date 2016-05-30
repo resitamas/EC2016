@@ -47,14 +47,34 @@
                 return "I";
 
         }
+
+
+    }
+
+    public bool IsButtonDisabled(EC2016.Models.MatchModel match)
+    {
+        return match.IsConfirmed && match.Date.CompareTo(DateTime.UtcNow.AddHours(2).AddMinutes(-5)) > 0;
+    }
+
+    public string GetTeamName(EC2016.Models.MatchModel match, bool isHome)
+    {
+
+        if (!match.IsConfirmed)
+            return "-";
+
+        if (isHome)
+            return Model.Teams.Where(t => t.Id == match.HomeTeamId).First().Name;
+
+        return Model.Teams.Where(t => t.Id == match.AwayTeamId).First().Name;
+
     }
 
 }
 
 @{
     int i = 0;
-        List<EC2016.Models.MatchModel> matches = Model.Matches;
-        List<EC2016.Models.TeamModel> teams = Model.Teams;
+    List<EC2016.Models.MatchModel> matches = Model.Matches;
+    List<EC2016.Models.TeamModel> teams = Model.Teams;
     while (i < matches.Count)
     {
 
@@ -72,21 +92,21 @@
                     <td colspan="2"></td>
                 </tr>
                 <tr>
-                    <td rowspan="2" width="55px" style="border:1px solid black;">@String.Format("{0}:{1}", matches.ElementAt(j).Date.TimeOfDay.Hours, matches.ElementAt(j).Date.TimeOfDay.Minutes == 0 ? "00" : matches.ElementAt(j).Date.TimeOfDay.Minutes.ToString())</td>
-                    <td rowspan="2" style="width:25px;border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@GetMatchGroup(matches.ElementAt(j))</td>
-                    <td width="120px" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@teams.Where(t => t.Id == matches.ElementAt(j).HomeTeamId).First().Name</td>
+                    <td rowspan="2" width="45px" style="border:1px solid black;">@String.Format("{0}:{1}", matches.ElementAt(j).Date.TimeOfDay.Hours, matches.ElementAt(j).Date.TimeOfDay.Minutes == 0 ? "00" : matches.ElementAt(j).Date.TimeOfDay.Minutes.ToString())</td>
+                    <td rowspan="2" style="width:30px;border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@GetMatchGroup(matches.ElementAt(j))</td>
+                    <td width="120px" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@GetTeamName(matches.ElementAt(j), true)</td>
                     <td style="width:30px; border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@GetScore(matches.ElementAt(j), true)</td>
                     <td width="30px" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black">@GetGuess(matches.ElementAt(j), true)</td>
                     @*@using (Html.BeginForm("Guess", "Home", FormMethod.Post))
                     {*@
                         @Html.ValidationSummary(true)
-                        <td rowspan="2" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black"><button type="submit" onclick="">Tipp</button><input type="hidden" value="@matches.ElementAt(j).Id" name="matchId" /></td>
+                        <td rowspan="2" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black"><button type="submit" @(IsButtonDisabled(matches.ElementAt(j)) ? "" : "disabled") >Tipp</button><input type="hidden" value="@matches.ElementAt(j).Id" name="matchId" /></td>
                         <td style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black"><input maxlength="2" name="homeScore" autocomplete="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="width:25px;"/></td>
                     @*}*@
                 </tr>
                 <tr>
                     @*<td style="width:25px; border-right:1px solid black;border-bottom:1px solid black">@GetMatchGroup(matches.ElementAt(j))</td>*@
-                    <td style="border-right:1px solid black;border-bottom:1px solid black">@teams.Where(t => t.Id == matches.ElementAt(j).AwayTeamId).First().Name</td>
+                    <td style="border-right:1px solid black;border-bottom:1px solid black">@GetTeamName(matches.ElementAt(j), false)</td>
                     <td style="border-right:1px solid black;border-bottom:1px solid black">@GetScore(matches.ElementAt(j), false)</td>
                     <td style="border-bottom:1px solid black">@GetGuess(matches.ElementAt(j), false)</td>
                     <td style="border-bottom:1px solid black; border-right:1px solid black"><input name="awayScore" style="width:25px;" autocomplete="off" /></td>
