@@ -11,6 +11,7 @@ using EC2016.Models;
 namespace EC2016.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

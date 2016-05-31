@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace EC2016.Controllers
 {
+    [RequireHttps]
     public class AdminController : Controller
     {
 
