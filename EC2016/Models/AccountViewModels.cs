@@ -5,9 +5,20 @@ namespace EC2016.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
-        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Helytelen felhasználónév")]
+        [Display(Name = "Felhasználónév")]
         public string Name { get; set; }
+
+        [RegularExpression("aranyer",ErrorMessage = "Helytelen kód")]
+        [Required(ErrorMessage = "Helytelen kód")]
+        [Display(Name = "Kód")]
+        public string Code { get; set; }
+
+        [Display(Name = "   ")]
+        public string Dummy { get; set; }
+
+
+
     }
 
     public class ExternalLoginListViewModel

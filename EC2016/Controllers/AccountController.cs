@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EC2016.Models;
 using Bll.Model;
+using Bll;
 
 namespace EC2016.Controllers
 {
@@ -358,7 +359,7 @@ namespace EC2016.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Name = loginInfo.ExternalIdentity.Name });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Name = loginInfo.ExternalIdentity.Name, Code="" });
             }
         }
 
@@ -367,7 +368,7 @@ namespace EC2016.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(/*ExternalLoginConfirmationViewModel model,*/ string returnUrl)
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model,/*, string code, */string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -377,12 +378,19 @@ namespace EC2016.Controllers
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
+
+                if (model.Code != "aranyer")
+                {
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Name = model.Name, Code = "" });;
+                }
+
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = info.ExternalIdentity.Name, Email = "dummy@dummy.com" };
+                
+                var user = new ApplicationUser { UserName = model.Name, Email = "dummy@dummy.com" };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -391,6 +399,7 @@ namespace EC2016.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         //return RedirectToLocal(returnUrl);
+                        DatabaseManager.AddUserToGuessGame(user.Id, 1);
                         return RedirectToAction("Index","Home");
                     }
                 }
