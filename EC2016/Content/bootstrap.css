@@ -188,6 +188,7 @@ input[type="submit"] {
 button[disabled],
 html input[disabled] {
   cursor: default;
+  background-color: #F26964;
 }
 
 input[type="checkbox"],

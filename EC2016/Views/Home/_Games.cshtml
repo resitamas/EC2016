@@ -7,6 +7,7 @@
     public PlayerStatModel GetPlayerStatsFromGuesses(List<GuessModel> guesses)
     {
         PlayerStatModel playerStats = new PlayerStatModel();
+        playerStats.Count = guesses.Count;
 
         foreach (var guess in guesses)
         {
@@ -56,7 +57,7 @@
     }
 }
 
-<div style="font-size:11px; text-align:left">
+<div class="black-text" style="font-size:11px; text-align:left; margin-left: 2px">
     <b>Telitalálat (TT): (10 pont)<br /> </b><span>Az eredmény tökéletes eltalálása</span><br />
     <b>Gólkülönbség eltalálása (GK): (6 pont)<br /></b><span>A két csapat által megszerzett gólok különbségének eltalálása (csak ha a győztest is helyesen tippeltük meg)</span><br />
     <b>Mérkőzés kimenetelének eltalálása (MK): (4 pont)<br /></b><span>A győztes csapat vagy a döntetlen eltalálása, 1-X-2, mint a TOTÓ-ban</span><br />
@@ -64,17 +65,19 @@
     <b>Összes szerzett gól számának eltalálása (ÖG): (2 pont)<br /></b><span>A mérkőzésen született összes gól számának eltalálása</span><br />
 
 </div>
+<br />
 
-<table border="1" style="margin: 0 auto;">
+<table class="black-text" border="1" style="margin: 0 auto;">
     <tr>
-        <th style="width:30px; text-align:center">H</th>
-        <th style="width:160px; text-align:center">Játékos</th>
-        <th style="width:35px; text-align:center">TT</th>
-        <th style="width:35px; text-align:center">GK</th>
-        <th style="width:35px; text-align:center">MK</th>
-        <th style="width:35px; text-align:center">CSG</th>
-        <th style="width:35px; text-align:center">ÖG</th>
-        <th style="width:35px; text-align:center">P</th>
+        <th style="width:30px; max-width:30px; text-align:center">H</th>
+        <th style="width:125px; max-width:125px; text-align:center">Játékos</th>
+        <th style="width:35px; max-width:35px; text-align:center">T</th>
+        <th style="width:35px; max-width:35px; text-align:center">TT</th>
+        <th style="width:35px; max-width:35px; text-align:center">GK</th>
+        <th style="width:35px; max-width:35px; text-align:center">MK</th>
+        <th style="width:35px; max-width:35px; text-align:center">CSG</th>
+        <th style="width:35px; max-width:35px; text-align:center">ÖG</th>
+        <th style="width:35px; max-width:35px; text-align:center">P</th>
     </tr>
 
     @{ List<PlayerStatModel> playerStatsModel = new List<PlayerStatModel>();}
@@ -83,23 +86,43 @@
     {
         PlayerStatModel playerStats = GetPlayerStatsFromGuesses(m.Guesses.ToList());
         playerStats.UserName = m.User.Name;
+        playerStats.UserId = m.User.Id;
         playerStatsModel.Add(playerStats);
     }
 
     @{int i = 1;}
-    @foreach (var m in playerStatsModel.OrderByDescending(p => p.Points))
+    @foreach (var m in playerStatsModel.OrderByDescending(p => p.Points).ThenByDescending(p => p.TT).ThenByDescending(p => p.GK).ThenByDescending(p => p.MK).ThenByDescending(p => p.CSG).ThenByDescending(p => p.OG))
     {
-        <tr>
-            <td>@(i++)</td>
-            <td>@m.UserName</td>
-            <td>@m.TT</td>
-            <td>@m.GK</td>
-            <td>@m.MK</td>
-            <td>@m.CSG</td>
-            <td>@m.OG</td>
-            <td>@m.Points</td>
-        </tr>
+        if (m.UserId == ViewBag.user.Id)
+        {
+            <tr class="red-text">
+                <td>@(i++)</td>
+                <td style="width:35px; max-width:35px; word-break:break-word">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</td>
+                <td>@m.Count</td>
+                <td>@m.TT</td>
+                <td>@m.GK</td>
+                <td>@m.MK</td>
+                <td>@m.CSG</td>
+                <td>@m.OG</td>
+                <td>@m.Points</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>@m.UserName</td>
+                <td>@m.Count</td>
+                <td>@m.TT</td>
+                <td>@m.GK</td>
+                <td>@m.MK</td>
+                <td>@m.CSG</td>
+                <td>@m.OG</td>
+                <td>@m.Points</td>
+            </tr>
+        }
     }
 
 </table>
+<br />
 

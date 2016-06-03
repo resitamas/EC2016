@@ -13,29 +13,29 @@ namespace EC2016.Controllers
     public class AdminController : Controller
     {
 
-        [HttpGet]
-        public ActionResult AddMatch()
-        {
+        //[HttpGet]
+        //public ActionResult AddMatch()
+        //{
 
-            List<Team> teams = DatabaseManager.GetAllTeam(); 
-            List<Tournament> tournaments = DatabaseManager.GetAllTournament();
+        //    List<Team> teams = DatabaseManager.GetAllTeam(); 
+        //    List<Tournament> tournaments = DatabaseManager.GetAllTournament();
 
-            AddMatchModel model = new AddMatchModel();
-            model.Teams = teams.Select(t => ModelHelper.CreateTeamModel(t)).ToList();
-            model.Tournaments = tournaments.Select(t => ModelHelper.CreateTournamentModel(t)).ToList();
-            model.Date = DateTime.Now.AddDays(27);
-            model.Type = MatchType.ThirdRound;
+        //    AddMatchModel model = new AddMatchModel();
+        //    model.Teams = teams.Select(t => ModelHelper.CreateTeamModel(t)).ToList();
+        //    model.Tournaments = tournaments.Select(t => ModelHelper.CreateTournamentModel(t)).ToList();
+        //    model.Date = DateTime.Now.AddDays(27);
+        //    model.Type = MatchType.ThirdRound;
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        public ActionResult AddMatch(AddMatchModel model)
-        {
-            DatabaseManager.AddMatch(model.HomeTeamSelectedId, model.AwayTeamSelectedId, model.TournamentSelectedId, model.Date, model.Type);
+        //[HttpPost]
+        //public ActionResult AddMatch(AddMatchModel model)
+        //{
+        //    DatabaseManager.AddMatch(model.HomeTeamSelectedId, model.AwayTeamSelectedId, model.TournamentSelectedId, model.Date, model.Type);
 
-            return Redirect("/admin/addmatch");
-        }
+        //    return Redirect("/admin/addmatch");
+        //}
 
     }
 }

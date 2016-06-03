@@ -100,7 +100,7 @@
                     @*@using (Html.BeginForm("Guess", "Home", FormMethod.Post))
                     {*@
                         @Html.ValidationSummary(true)
-                        <td rowspan="2" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black"><button type="submit" @(IsButtonDisabled(matches.ElementAt(j)) ? "" : "disabled") >Tipp</button><input type="hidden" value="@matches.ElementAt(j).Id" name="matchId" /></td>
+                        <td rowspan="2" style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black"><button class="blue-background yellow-text" type="submit" @(IsButtonDisabled(matches.ElementAt(j)) ? "" : "disabled") >Tipp</button><input type="hidden" value="@matches.ElementAt(j).Id" name="matchId" /></td>
                         <td style="border-top:1px solid black; border-right:1px solid black;border-bottom:1px solid black"><input maxlength="2" name="homeScore" autocomplete="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="width:25px;"/></td>
                     @*}*@
                 </tr>

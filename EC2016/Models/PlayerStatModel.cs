@@ -21,6 +21,10 @@ namespace EC2016.Models
 
         public string UserName { get; set; }
 
+        public string UserId { get; set; }
+
+        public int Count { get; set; }
+
 
         public int Points
         {

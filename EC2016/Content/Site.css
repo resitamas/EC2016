@@ -41,6 +41,44 @@ textarea {
     margin-top:-300px;
     margin-left:-600px;
     z-index:-1
-    
+}
 
+.yellow-background{
+    background-color: #FFD464
+}
+
+.yellow-text{
+    color: #FFD464
+}
+
+.red-background{
+    background-color: #F26964
+}
+
+.red-text{
+    color: #F26964
+}
+
+.blue-background{
+    background-color: #1253A4
+}
+
+.blue-text{
+    color: #1253A4
+}
+
+.white-background{
+    background-color: #F4F4F2
+}
+
+.white-text{
+    color: #F4F4F2
+}
+
+.black-background{
+    background-color: #30302F
+}
+
+.black-text{
+    color: #30302F
 }
