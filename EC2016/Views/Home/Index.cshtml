@@ -12,7 +12,34 @@
             $(".sidediv").css({ "width": width / 4 });
             $(".centerdiv").css({ "width": (width / 2) - 10 });
             $(".sidediv").css({ "height": height / 3 });
-            $(".centerdiv").css({ "height": (height / 3)});
+            $(".centerdiv").css({ "height": (height / 3) });
+
+            var str = "@ViewBag.menu";
+
+            if (str == "guesses") {
+
+                $("#matchesTab").addClass("red-text");
+                $("#teamsTab").addClass("blue-text");
+                $("#gamesTab").addClass("blue-text");
+
+            } else {
+                if (str == "teams") {
+
+                    $("#matchesTab").addClass("blue-text");
+                    $("#teamsTab").addClass("red-text");
+                    $("#gamesTab").addClass("blue-text");
+
+                }
+                else {
+
+                    $("#matchesTab").addClass("blue-text");
+                    $("#teamsTab").addClass("blue-text");
+                    $("#gamesTab").addClass("red-text");
+
+                }
+            }
+
+
         });
 
         function teamNameClicked(element) {
@@ -31,9 +58,9 @@
                 $("#rightDiv").css("visibility", "visible");
             }
 
-            if (window.innerWidth < 1100) {
-                $("#rightDiv").css({ "left": "760px", "right": "auto" });
-                $("#header").css({"left":"350px","margin-left":"0px"});
+            if (window.innerWidth < 1185) {
+                $("#rightDiv").css({ "left": "810px", "right": "auto" });
+                $("#header").css({"left":"393px","margin-left":"0px"});
             } else {
                 $("#rightDiv").css({ "left": "auto", "right": "100px" });
                 $("#header").css({ "left": "50%","margin-left":"-200px"});
@@ -45,8 +72,8 @@
     </script>
 }
 
-<div class="white-background" id="leftDiv" style="height:530px; width:240px; position:fixed; top:20px; left: 100px; " >
-    <div style="height:170px; width:240px; ">
+<div class="white-background" id="leftDiv" style="text-align:center; height:530px; width:280px; position:fixed; top:20px; left: 100px; " >
+    <div style="height:170px; width:280px; ">
         <div style="text-align:center; width:100%">
             <h4>A Csoport</h4>
         </div>
@@ -54,7 +81,7 @@
             @Html.Partial("~/Views/Home/Table.cshtml", Model.ATeams)
         </div>
     </div>
-    <div style="height:170px; width:240px;">
+    <div style="height:170px; width:280px;">
         <div style="text-align:center; width:100%">
             <h4>B Csoport</h4>
         </div>
@@ -62,7 +89,7 @@
             @Html.Partial("~/Views/Home/Table.cshtml", Model.BTeams)
         </div>
     </div>
-    <div style="height:170px; width:240px;">
+    <div style="height:170px; width:280px;">
         <div style="text-align:center; width:100%">
             <h4>C Csoport</h4>
         </div>
@@ -72,8 +99,8 @@
     </div>
 </div>
 
-<div class="white-background" id="rightDiv" style="height:530px; width:240px; position:fixed; top:20px; right: 100px;">
-    <div style="height:170px; width:240px;">
+<div class="white-background" id="rightDiv" style="height:530px; width:280px; position:fixed; top:20px; right: 100px;">
+    <div style="height:170px; width:280px;">
         <div style="text-align:center; width:100%">
             <h4>D Csoport</h4>
         </div>
@@ -81,7 +108,7 @@
             @Html.Partial("~/Views/Home/Table.cshtml", Model.DTeams)
         </div>
     </div>
-    <div style="height:170px; width:240px;">
+    <div style="height:170px; width:280px;">
         <div style="text-align:center; width:100%">
             <h4>E Csoport</h4>
         </div>
@@ -89,7 +116,7 @@
             @Html.Partial("~/Views/Home/Table.cshtml", Model.ETeams)
         </div>
     </div>
-    <div style="height:170px; width:240px;">
+    <div style="height:170px; width:280px;">
         <div style="text-align:center; width:100%">
             <h4>F Csoport</h4>
         </div>
@@ -111,9 +138,9 @@
         <div class="navbar navbar-default white-background" style="height:100%; width:100%;">
             <div class="container white-background" style="text-align:center; height:40px; border-bottom-color: #F26964; border-bottom: 10px">
                 <ul class="nav" style="height:40px">
-                    <li class="white-background" style="text-align:center; display:inline-block; width:110px; height:40px">@Html.ActionLink("Mérkőzések", "Guesses", "Home")</li>
-                    <li class="white-background" style="text-align:center; display:inline-block; width:110px; height: 40px">@Html.ActionLink("Csapatok", "Teams", "Home")</li>
-                    <li class="white-background" style="width:110px; display:inline-block; height:40px">@Html.ActionLink("Tippjáték", "Game", "Home")</li>
+                    <li class="white-background" style="text-align:center; display:inline-block; width:110px; height:40px">@Html.ActionLink("Mérkőzések", "Guesses", "Home", new { id = "matchesTab" })</li>
+                    <li class="white-background" style="text-align:center; display:inline-block; width:110px; height: 40px">@Html.ActionLink("Csapatok", "Teams", "Home", new { id = "teamsTab" })</li>
+                    <li class="white-background" style="width:110px; display:inline-block; height:40px">@Html.ActionLink("Tippjáték", "Game", "Home", new { id = "gamesTab" })</li>
                 </ul>
             </div>
         </div>

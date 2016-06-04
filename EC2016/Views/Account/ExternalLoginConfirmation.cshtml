@@ -2,8 +2,6 @@
 @{
     ViewBag.Title = "Register";
 }
-@*<h2>@ViewBag.Title.</h2>
-<h3>Associate your @ViewBag.LoginProvider account.</h3>*@
 
 <h1>Regisztráció megerősítése</h1>
 
@@ -11,7 +9,6 @@
 {
     @Html.AntiForgeryToken()
 
-    @*<h4>Association Form</h4>*@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <h3>Szia @Model.Name!</h3>
@@ -20,13 +17,6 @@
     </p>
     <h4>Jó játékot!</h4>
     
-    @*<div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
     <div class="form-group">
         @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
         <div class="col-md-10" style="margin-bottom:10px">
@@ -42,12 +32,6 @@
         <div class="col-md-10" style="margin-bottom:10px">
             <input type="submit" class="btn btn-default" value="Regisztrálok" />
         </div>
-        @*<input id="code" type="password" name="code" value="" style="width:180px; " />*@
-        @*<h4>Felhasználónév:</h4>*@
-        @*@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })*@
-        @*<input type="text"  name="name" value="@Model.Name" style="width:180px; "/>*@
-        @*<div class="col-md-offset-2 col-md-10">*@
-        @*</div>*@
     </div>
 }
 
