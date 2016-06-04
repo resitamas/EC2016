@@ -68,7 +68,7 @@
 
 @foreach (var team in Model.Teams)
 {
-    <h4 class="black-text" style="cursor:pointer" onclick="teamNameClicked(this)">@team.Name</h4>
+    <h4 class="black-text hover-yellow" style="cursor:pointer" onclick="teamNameClicked(this)">@team.Name</h4>
     var matches = Model.Matches.Where(m => m.HomeTeamId == team.Id || m.AwayTeamId == team.Id).OrderBy(m => m.Date).ToList();
     <div class="black-text" style="display:none;">
         @foreach (var match in matches)

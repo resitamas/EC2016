@@ -82,3 +82,7 @@ textarea {
 .black-text{
     color: #30302F
 }
+
+.hover-yellow:hover {
+    color: #FFD464
+}
