@@ -106,7 +106,7 @@ namespace EC2016.Controllers
         public ActionResult Guess(int matchId, int? homeScore, int? awayScore)
         {
 
-            if (DatabaseManager.GetMatchById(matchId).Date.CompareTo(DateTime.UtcNow.AddHours(2).AddMinutes(-5)) < 0)
+            if (DatabaseManager.GetMatchById(matchId).Date.AddMinutes(-5).CompareTo(DateTime.Now) < 0)
             {
                 return RedirectToAction("Index", "Home");
             }
