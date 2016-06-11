@@ -399,7 +399,11 @@ namespace EC2016.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         //return RedirectToLocal(returnUrl);
-                        DatabaseManager.AddUserToGuessGame(user.Id, 1);
+#if !DEBUG
+                         DatabaseManager.AddUserToGuessGame(user.Id, 1);
+#endif
+
+
                         return RedirectToAction("Index","Home");
                     }
                 }
@@ -447,7 +451,7 @@ namespace EC2016.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
+#region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -504,6 +508,6 @@ namespace EC2016.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-        #endregion
+#endregion
     }
 }

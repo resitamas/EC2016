@@ -151,9 +151,9 @@
     <div class="white-background black-text" style="align-content:center; text-align:center; width:400px; margin: 0 auto">
         <br />
         @{
-            @*DateTime MyTime = DateTime.Now;
+            @*<span>@DateTime.Now</span>*@
 
-            DateTime MyTimeInWesternEurope = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(MyTime, "W. Europe Standard Time");
+            @*DateTime MyTimeInWesternEurope = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(MyTime, "W. Europe Standard Time");
             <h4>@MyTimeInWesternEurope.AddMinutes(-5)</h4>*@
             @*<h4>@DateTime.Now</h4>*@
         }

@@ -19,7 +19,6 @@ namespace EC2016.Controllers
         public ActionResult Index(string menu = "guesses")
         {
 
-
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 return Redirect("~/Account/Login");

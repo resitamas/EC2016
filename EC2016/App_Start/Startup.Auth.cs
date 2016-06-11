@@ -56,9 +56,17 @@ namespace EC2016
             //   consumerKey: "",
             //   consumerSecret: "");
 
+#if DEBUG
+            app.UseFacebookAuthentication(
+               appId: "1748405282104603",
+               appSecret: "ebcaae66eee1548c1b035b2252b9e329");
+#else
             app.UseFacebookAuthentication(
                appId: "955285134590902",
                appSecret: "d4813195c58fb18b744ddf849375dc88");
+#endif
+
+
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

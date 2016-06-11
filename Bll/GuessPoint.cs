@@ -9,7 +9,11 @@ namespace Bll
     public class GuessPoint
     {
 
-        public const int TTPoint = 10;
+        public const int TTPoint = 14;
+        public const int MKGKPoint = 9;
+        public const int MKCSGPoint = 9;
+        public const int MKOGPoint = 6;
+
         public const int GKPoint = 6;
         public const int MKPoint = 4;
         public const int CSGPoint = 3;
