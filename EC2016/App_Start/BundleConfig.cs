@@ -10,7 +10,8 @@ namespace EC2016
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-ui-{version}.js"
+                        "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,6 +31,13 @@ namespace EC2016
                       "~/Content/bootstrap-social.css",
                       "~/Content/font-awesome.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/tooltipster/").Include(
+                      "~/Content/tooltipster/tooltipster.bundle.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/tooltipster").Include(
+                        "~/Scripts/tooltipster/tooltipster.bundle.js"));
+
         }
     }
 }

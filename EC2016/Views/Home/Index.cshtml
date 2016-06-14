@@ -39,14 +39,47 @@
                 }
             }
 
+            //$body = $("body");
+
+            //$(document).on({
+            //    ajaxStart: function () { alert("start"); $body.addClass("loading"); },
+            //    ajaxStop: function () { alert("end"); $body.removeClass("loading"); }
+            //});
 
         });
+
+        function getGuess(data) {
+
+            var table = $("table[data=" + data.id + "]");
+            table.find("#homeGuess").html(data.homeGuess);
+            table.find("#awayGuess").html(data.awayGuess);
+            table.find("#inputHome").val("");
+            table.find("#inputAway").val("");
+
+        }
+
+        function showIndicator(id) {
+            //alert("showindicator");
+            //$body.addClass("loading");
+            $("button[data=" + id + "]").prop('disabled', true);
+            $("button[data=" + id + "]").addClass("animatedbutton");
+
+        }
+
+        function dismissIndicator(id) {
+            //$body.removeClass("loading");
+            $("button[data=" + id + "]").prop('disabled', false);
+            $("button[data=" + id + "]").removeClass("animatedbutton");
+        }
 
         function teamNameClicked(element) {
 
             $(element).next().toggle();
 
         }
+
+
+        
 
         $(window).resize(function () {
 

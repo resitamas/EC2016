@@ -6,6 +6,7 @@
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
     <title>@ViewBag.Title - EB 2016 Játék</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/tooltipster")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -37,9 +38,11 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>*@
     </div>
+    @*<div class="modal"><!-- Place at bottom of page --></div>*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/tooltipster")
     @RenderSection("scripts", required: false)
 </body>
 </html>

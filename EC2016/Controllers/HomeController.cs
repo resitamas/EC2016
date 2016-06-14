@@ -31,7 +31,6 @@ namespace EC2016.Controllers
 
             //DatabaseManager.AddUserToGuessGame(user.Id,1);
 
-
             IndexModel model = new IndexModel();
             List<TeamModel> teams;
             List<MatchModel> matches;
@@ -107,7 +106,13 @@ namespace EC2016.Controllers
 
             if (DatabaseManager.GetMatchById(matchId).Date.AddMinutes(-5).CompareTo(DateTime.Now) < 0)
             {
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+                //return Json(new { error = true});
+                return new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new { id = matchId ,error = true }
+                };
             }
 
 
@@ -118,13 +123,24 @@ namespace EC2016.Controllers
             if (user.Guesses.Select(g => g.MatchId).Contains(matchId))
             {
                 DatabaseManager.ModifyGuess(user.Id, matchId, hScore, aScore);
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+                //return Json(new { homeGuess = hScore, awayGuess = awayScore});
+                return new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new { id = matchId, error = true , homeGuess = hScore, awayGuess = aScore}
+                };
             }
 
             DatabaseManager.AddGuess(matchId, user.Id, hScore, aScore);
 
-
-            return RedirectToAction("Index","Home");
+            //return Json(new { homeGuess = hScore, awayGuess = awayScore });
+            //return RedirectToAction("Index","Home");
+            return new JsonResult()
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                Data = new { id = matchId, error = true, homeGuess = hScore, awayGuess = aScore }
+            };
         }
 
 
