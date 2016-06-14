@@ -13,6 +13,7 @@ namespace Bll
         public const int MKGKPoint = 9;
         public const int MKCSGPoint = 9;
         public const int MKOGPoint = 6;
+        public const int DrawMKPoint = 7;
 
         public const int GKPoint = 6;
         public const int MKPoint = 4;
