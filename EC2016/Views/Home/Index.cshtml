@@ -24,6 +24,8 @@
                 content: makeTableOfUserResults($(this).parent().attr("data-userid"))
             });
 
+            $("#gamestanding tr:last").children().addClass("borderbottom");
+
             if (str == "guesses") {
 
                 $("#matchesTab").addClass("red-text");

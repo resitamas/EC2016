@@ -142,3 +142,28 @@ body.loading .modal {
 .tooltips{
     cursor: pointer;
 }
+
+.borderleftandtop {
+   
+    text-align:center; 
+    border-left: 1px solid black; 
+    border-top: 1px solid black; 
+    /*border-right: 1px solid black*/
+}
+
+.width35 {
+    width:35px; 
+    max-width:35px; 
+    text-align:center; 
+}
+
+.borderleftandtopandright {
+    
+    border-left: 1px solid black; 
+    border-top: 1px solid black; 
+    border-right: 1px solid black
+}
+
+.borderbottom {
+    border-bottom: 1px solid black;
+}

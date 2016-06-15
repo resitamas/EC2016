@@ -150,32 +150,32 @@
 </div>
 <br />
 
-<table class="black-text" border="1" style="margin: 0 auto;">
+<table id="gamestanding" class="black-text" @*border="1"*@ style="margin: 0 auto;">
     <tr>
-        <td colspan="4" style="width:30px; max-width:30px; text-align:center"></td>
-        <td style="width:35px; max-width:35px; text-align:center">@Bll.GuessPoint.TTPoint</td>
-        <td style="width:35px; max-width:35px; text-align:center">@Bll.GuessPoint.MKCSGPoint</td>
-        <td style="width:35px; max-width:35px; text-align:center">@Bll.GuessPoint.MKGKPoint</td>
-        <td style="width:35px; max-width:35px; text-align:center; word-break:break-word;">@Bll.GuessPoint.DrawMKPoint</td>
-        <td style="width:35px; max-width:35px; text-align:center; word-break:break-word;">@Bll.GuessPoint.MKOGPoint</td>
-        <td style="width:35px; max-width:35px; text-align:center; word-break:break-word;">@Bll.GuessPoint.MKPoint</td>
-        <td style="width:35px; max-width:35px; text-align:center; word-break:break-word;">@Bll.GuessPoint.CSGPoint</td>
-        <td style="width:35px; max-width:35px; text-align:center">@Bll.GuessPoint.OGPoint</td>
+        <td colspan="4" style="width:30px; max-width:30px; text-align:center;"></td>
+        <td class="borderleftandtop width35">@Bll.GuessPoint.TTPoint</td>
+        <td class="borderleftandtop width35">@Bll.GuessPoint.MKCSGPoint</td>
+        <td class="borderleftandtop width35">@Bll.GuessPoint.MKGKPoint</td>
+        <td class="borderleftandtop width35">@Bll.GuessPoint.DrawMKPoint</td>
+        <td class="borderleftandtop width35">@Bll.GuessPoint.MKOGPoint</td>
+        <td class="borderleftandtop width35">@Bll.GuessPoint.MKPoint</td>
+        <td class="borderleftandtop width35">@Bll.GuessPoint.CSGPoint</td>
+        <td class="borderleftandtopandright width35">@Bll.GuessPoint.OGPoint</td>
     </tr>
     <tr>
-        <th style="width:30px; max-width:30px; text-align:center">H</th>
-        <th style="width:30px; max-width:30px; text-align:center">F</th>
-        <th style="width:125px; max-width:125px; text-align:center">Játékos</th>
-        <th style="width:35px; max-width:35px; text-align:center">T</th>
-        <th style="width:35px; max-width:35px; text-align:center">TT</th>
-        <th style="width:35px; max-width:35px; text-align:center; word-break:break-word;">MK + CSG</th>
-        <th style="width:35px; max-width:35px; text-align:center; word-break:break-word;">MK + GK</th>
-        <th style="width:35px; max-width:35px; text-align:center; word-break:break-word;">MK + GK (D)</th>
-        <th style="width:35px; max-width:35px; text-align:center; word-break:break-word;">MK + OG</th>
-        <th style="width:35px; max-width:35px; text-align:center">MK</th>
-        <th style="width:35px; max-width:35px; text-align:center">CSG</th>
-        <th style="width:35px; max-width:35px; text-align:center">ÖG</th>
-        <th style="width:35px; max-width:35px; text-align:center">P</th>
+        <th class="borderleftandtop" style="width:30px; max-width:30px; text-align:center">H</th>
+        <th class="borderleftandtop" style="width:30px; max-width:30px; text-align:center">F</th>
+        <th class="borderleftandtop" style="width:125px; max-width:125px; text-align:center">Játékos</th>
+        <th class="borderleftandtop width35">T</th>
+        <th class="borderleftandtop width35">TT</th>
+        <th class="borderleftandtop width35" style="word-break:break-word;">MK + CSG</th>
+        <th class="borderleftandtop width35" style="word-break:break-word;">MK + GK</th>
+        <th class="borderleftandtop width35" style="word-break:break-word;">MK + GK (D)</th>
+        <th class="borderleftandtop width35" style="word-break:break-word;">MK + OG</th>
+        <th class="borderleftandtop width35">MK</th>
+        <th class="borderleftandtop width35">CSG</th>
+        <th class="borderleftandtop width35">ÖG</th>
+        <th class="borderleftandtopandright width35">P</th>
     </tr>
 
     @{ List<PlayerStatModel> playerStatsModel = new List<PlayerStatModel>();}
@@ -196,37 +196,38 @@
         if (m.UserId == ViewBag.user.Id)
         {
             <tr class="red-text" data-userid="@m.UserId">
-                <td>@(i++)</td>
-                <td></td>
-                <td style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
-                <td>@m.Count</td>
-                <td class="tooltips" data-pointType="TT">@m.TT</td>
-                <td class="tooltips" data-pointType="MKCSG">@m.MKCSG</td>
-                <td class="tooltips" data-pointType="MKGK">@m.MKGK</td>
-                <td class="tooltips" data-pointType="MKGKDRAW">@m.MKGKDraw</td>
-                <td class="tooltips" data-pointType="MKOG">@m.MKOG</td>
-                <td class="tooltips" data-pointType="MK">@m.MK</td>
-                <td class="tooltips" data-pointType="CSG">@m.CSG</td>
-                <td class="tooltips" data-pointType="OG">@m.OG</td>
-                <td>@m.Points</td>
+                <td class="borderleftandtop" >@(i++)</td>
+                <td class="borderleftandtop"></td>
+                <td class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
+                <td class="borderleftandtop">@m.Count</td>
+                <td class="tooltips borderleftandtop" data-pointType="TT">@m.TT</td>
+                <td class="tooltips borderleftandtop " data-pointType="MKCSG">@m.MKCSG</td>
+                <td class="tooltips borderleftandtop" data-pointType="MKGK">@m.MKGK</td>
+                <td class="tooltips borderleftandtop" data-pointType="MKGKDRAW">@m.MKGKDraw</td>
+                <td class="tooltips borderleftandtop" data-pointType="MKOG">@m.MKOG</td>
+                <td class="tooltips borderleftandtop" data-pointType="MK">@m.MK</td>
+                <td class="tooltips borderleftandtop" data-pointType="CSG">@m.CSG</td>
+                <td class="tooltips borderleftandtop" data-pointType="OG">@m.OG</td>
+                <td class="borderleftandtopandright">@m.Points</td>
             </tr>
         }
         else
         {
             <tr data="@m.UserId">
-                <td>@(i++)</td>
-                <td></td>
-                <td>@m.UserName</td>
-                <td>@m.Count</td>
-                <td class="tooltips" data-pointType="TT">@m.TT</td>
-                <td class="tooltips" data-pointType="MKCSG">@m.MKCSG</td>
-                <td class="tooltips" data-pointType="MKGK">@m.MKGK</td>
-                <td class="tooltips" data-pointType="MKGKDRAW">@m.MKGKDraw</td>
-                <td class="tooltips" data-pointType="MKOG">@m.MKOG</td>
-                <td class="tooltips" data-pointType="MK">@m.MK</td>
-                <td class="tooltips" data-pointType="CSG">@m.CSG</td>
-                <td class="tooltips" data-pointType="OG">@m.OG</td>
-                <td>@m.Points</td>
+
+                <td class="borderleftandtop">@(i++)</td>
+                <td class="borderleftandtop"></td>
+                <td class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
+                <td class="borderleftandtop">@m.Count</td>
+                <td class="tooltips borderleftandtop" data-pointType="TT">@m.TT</td>
+                <td class="tooltips borderleftandtop " data-pointType="MKCSG">@m.MKCSG</td>
+                <td class="tooltips borderleftandtop" data-pointType="MKGK">@m.MKGK</td>
+                <td class="tooltips borderleftandtop" data-pointType="MKGKDRAW">@m.MKGKDraw</td>
+                <td class="tooltips borderleftandtop" data-pointType="MKOG">@m.MKOG</td>
+                <td class="tooltips borderleftandtop" data-pointType="MK">@m.MK</td>
+                <td class="tooltips borderleftandtop" data-pointType="CSG">@m.CSG</td>
+                <td class="tooltips borderleftandtop" data-pointType="OG">@m.OG</td>
+                <td class="borderleftandtopandright">@m.Points</td>
             </tr>
         }
     }
