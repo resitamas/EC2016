@@ -139,6 +139,8 @@ namespace EC2016.Helper
         {
             public PlayerStatModel PlayerStatModel { get; set; }
 
+            public PlayerStatModel PlayerStatModelBefore { get; set; }
+
             public PlayerMatchesWithGuesses PlayerMatchesWithGuesses { get; set; }
         }
 
@@ -147,8 +149,11 @@ namespace EC2016.Helper
         {
             Wrapper wrapper = new Wrapper();
 
-            PlayerStatModel playerStats = new PlayerStatModel();
-            playerStats.Count = guesses.Count();
+            PlayerStatModel playerStatModel = new PlayerStatModel();
+            playerStatModel.Count = guesses.Count();
+
+            PlayerStatModel playerStatModelBefore = new PlayerStatModel();
+            int lastId = matches.Where(m => m.HomeScore.HasValue).OrderBy(m => m.Date).Last().Id;
 
             PlayerMatchesWithGuesses playerMatchesWithGuesses = new PlayerMatchesWithGuesses();
 
@@ -160,12 +165,13 @@ namespace EC2016.Helper
                 {
                     if (match.HomeScore.Value == guess.HomeScore && match.AwayScore.Value == guess.AwayScore)
                     {
-                        playerStats.TT++;
-                        //playerStats.GK++;
-                        //playerStats.MK++;
-                        //playerStats.CSG++;
-                        //playerStats.OG++;
-                        playerStats.TTPoint += GuessPoint.TTPoint;
+                        playerStatModel.TT++;
+                        playerStatModel.TTPoint += GuessPoint.TTPoint;
+                        if (match.Id != lastId)
+                        {
+                            playerStatModelBefore.TT++;
+                            playerStatModelBefore.TTPoint += GuessPoint.TTPoint;
+                        }
                         playerMatchesWithGuesses.TTGuessesByMatch.Add(guess.Id, match.Id);
                     }
                     else
@@ -208,8 +214,13 @@ namespace EC2016.Helper
 
                         if (isMK && isCSG)
                         {
-                            playerStats.MKCSGPoint += GuessPoint.MKCSGPoint;
-                            playerStats.MKCSG++;
+                            playerStatModel.MKCSGPoint += GuessPoint.MKCSGPoint;
+                            playerStatModel.MKCSG++;
+                            if (match.Id != lastId)
+                            {
+                                playerStatModelBefore.MKCSG++;
+                                playerStatModelBefore.MKCSGPoint += GuessPoint.MKCSGPoint;
+                            }
                             playerMatchesWithGuesses.MKCSGGuessesByMatch.Add(guess.Id, match.Id);
 
                         }
@@ -219,15 +230,25 @@ namespace EC2016.Helper
                             {
                                 if (match.HomeScore.Value == match.AwayScore.Value)
                                 {
-                                    playerStats.MKGKPoint += GuessPoint.DrawMKPoint;
-                                    playerStats.MKGKDraw++;
+                                    playerStatModel.MKGKPoint += GuessPoint.DrawMKPoint;
+                                    playerStatModel.MKGKDraw++;
+                                    if (match.Id != lastId)
+                                    {
+                                        playerStatModelBefore.MKGKPoint += GuessPoint.DrawMKPoint;
+                                        playerStatModelBefore.MKGKDraw++;
+                                    }
                                     playerMatchesWithGuesses.MKGKDRAWGuessesByMatch.Add(guess.Id, match.Id);
 
                                 }
                                 else
                                 {
-                                    playerStats.MKGKPoint += GuessPoint.MKGKPoint;
-                                    playerStats.MKGK++;
+                                    playerStatModel.MKGKPoint += GuessPoint.MKGKPoint;
+                                    playerStatModel.MKGK++;
+                                    if (match.Id != lastId)
+                                    {
+                                        playerStatModelBefore.MKGKPoint += GuessPoint.MKGKPoint;
+                                        playerStatModelBefore.MKGK++;
+                                    }
                                     playerMatchesWithGuesses.MKGKGuessesByMatch.Add(guess.Id, match.Id);
                                 }
                             }
@@ -235,24 +256,39 @@ namespace EC2016.Helper
                             {
                                 if (isMK && isOG)
                                 {
-                                    playerStats.MKOGPoint += GuessPoint.MKOGPoint;
-                                    playerStats.MKOG++;
+                                    playerStatModel.MKOGPoint += GuessPoint.MKOGPoint;
+                                    playerStatModel.MKOG++;
+                                    if (match.Id != lastId)
+                                    {
+                                        playerStatModelBefore.MKOGPoint += GuessPoint.MKOGPoint;
+                                        playerStatModelBefore.MKOG++;
+                                    }
                                     playerMatchesWithGuesses.MKOGGuessesByMatch.Add(guess.Id, match.Id);
                                 }
                                 else
                                 {
                                     if (isMK)
                                     {
-                                        playerStats.MKPoint += GuessPoint.MKPoint;
-                                        playerStats.MK++;
+                                        playerStatModel.MKPoint += GuessPoint.MKPoint;
+                                        playerStatModel.MK++;
+                                        if (match.Id != lastId)
+                                        {
+                                            playerStatModelBefore.MKPoint += GuessPoint.MKPoint;
+                                            playerStatModelBefore.MK++;
+                                        }
                                         playerMatchesWithGuesses.MKGuessesByMatch.Add(guess.Id, match.Id);
                                     }
                                     else
                                     {
                                         if (isCSG)
                                         {
-                                            playerStats.CSGPoint += GuessPoint.CSGPoint;
-                                            playerStats.CSG++;
+                                            playerStatModel.CSGPoint += GuessPoint.CSGPoint;
+                                            playerStatModel.CSG++;
+                                            if (match.Id != lastId)
+                                            {
+                                                playerStatModelBefore.CSGPoint += GuessPoint.CSGPoint;
+                                                playerStatModelBefore.CSG++;
+                                            }
                                             playerMatchesWithGuesses.CSGGuessesByMatch.Add(guess.Id, match.Id);
 
                                         }
@@ -260,8 +296,13 @@ namespace EC2016.Helper
                                         {
                                             if (isOG)
                                             {
-                                                playerStats.OGPoint += GuessPoint.OGPoint;
-                                                playerStats.OG++;
+                                                playerStatModel.OGPoint += GuessPoint.OGPoint;
+                                                playerStatModel.OG++;
+                                                if (match.Id != lastId)
+                                                {
+                                                    playerStatModelBefore.OGPoint += GuessPoint.OGPoint;
+                                                    playerStatModelBefore.OG++;
+                                                }
                                                 playerMatchesWithGuesses.OGGuessesByMatch.Add(guess.Id, match.Id);
                                             }
                                         }
@@ -275,7 +316,8 @@ namespace EC2016.Helper
 
             }
 
-            wrapper.PlayerStatModel = playerStats;
+            wrapper.PlayerStatModel = playerStatModel;
+            wrapper.PlayerStatModelBefore = playerStatModelBefore;
             wrapper.PlayerMatchesWithGuesses = playerMatchesWithGuesses;
 
             return wrapper;

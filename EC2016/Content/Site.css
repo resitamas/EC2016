@@ -201,6 +201,31 @@ body.loading .modal {
 	padding: 8px;
 }
 
+.triangle-up {
+    margin: 0 auto;
+	width: 0;
+	height: 0;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 10px solid #1253A4;
+}
+
+.triangle-down {
+    margin: 0 auto;
+	width: 0;
+	height: 0;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-top: 10px solid #F26964;
+}
+
+.rectangle {
+    margin: 0 auto;
+	width: 10px;
+	height: 2px;
+	background: #FFD464;
+}
+
 /*.tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-arrow-background {
 	border-color: #1253A4;
 }*/

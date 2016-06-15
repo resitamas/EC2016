@@ -64,6 +64,7 @@ namespace EC2016.Controllers
                         ug.Guesses = u.Guesses.Select(g => ModelHelper.CreateGuessModel(g));
                         ModelHelper.Wrapper wrapper = ModelHelper.GetPlayerStatsFromGuesses(ug.Guesses, model.Matches);
                         ug.PlayerStats = wrapper.PlayerStatModel;
+                        ug.PlayerStatsBefore = wrapper.PlayerStatModelBefore;
                         //ug.PlayerMatchesWithGuesses = wrapper.PlayerMatchesWithGuesses;
 
                         model.UsersWithGuessesAndStats.Add(ug);

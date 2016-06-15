@@ -44,6 +44,8 @@ namespace EC2016.Models
 
             public PlayerStatModel PlayerStats { get; set; }
 
+            public PlayerStatModel PlayerStatsBefore { get; set; }
+
             public PlayerMatchesWithGuesses PlayerMatchesWithGuesses { get; set; }
 
 

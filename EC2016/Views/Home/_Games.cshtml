@@ -4,127 +4,136 @@
 
 @functions {
 
-//public PlayerStatModel GetPlayerStatsFromGuesses(List<GuessModel> guesses, bool isMax = false)
-//{
-//    PlayerStatModel playerStats = new PlayerStatModel();
-//    playerStats.Count = guesses.Count;
-//    playerStats.Max = isMax;
+    public int GetUserPositionChange(string userId, List<PlayerStatModel> now, List<PlayerStatModel> before)
+    {
+        int indexBefore = before.IndexOf(before.Where(b => b.UserId == userId).First());
+        int indexNow = now.IndexOf(now.Where(b => b.UserId == userId).First());
 
-//    foreach (var guess in guesses)
-//    {
-//        MatchModel match = Model.Matches.Where(m => m.Id == guess.MatchId).First();
-
-//        if (match.HomeScore.HasValue) //game has been playing
-//        {
-//            if (match.HomeScore.Value == guess.HomeScore && match.AwayScore.Value == guess.AwayScore)
-//            {
-//                playerStats.TT++;
-//                //playerStats.GK++;
-//                //playerStats.MK++;
-//                //playerStats.CSG++;
-//                //playerStats.OG++;
-//                playerStats.TTPoint += Bll.GuessPoint.TTPoint;
-//            }
-//            else
-//            {
-//                bool isGK = false;
-//                if (Math.Abs(match.HomeScore.Value - match.AwayScore.Value) == Math.Abs(guess.HomeScore - guess.AwayScore) &&
-//                    ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore)
-//                    || (match.HomeScore.Value <= match.AwayScore.Value && guess.HomeScore <= guess.AwayScore)))
-//                {
-//                    //playerStats.GK++;
-//                    isGK = true;
-//                }
-
-//                bool isMK = false;
-//                if ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore) ||
-//                    (match.HomeScore.Value < match.AwayScore.Value && guess.HomeScore < guess.AwayScore) ||
-//                    (match.HomeScore.Value == match.AwayScore.Value && guess.HomeScore == guess.AwayScore))
-//                {
-//                    //playerStats.MK++;
-//                    isMK = true;
-//                }
-
-//                bool isCSG = false;
-//                if (match.HomeScore.Value == guess.HomeScore || match.AwayScore.Value == guess.AwayScore)
-//                {
-//                    //playerStats.CSG++;
-//                    isCSG = true;
-//                    //if (isMK)
-//                    //{
-//                    //    playerStats.Bonus += 2;
-//                    //}
-//                }
-
-//                bool isOG = false;
-//                if (match.HomeScore.Value + match.AwayScore.Value == guess.HomeScore + guess.AwayScore)
-//                {
-//                    //playerStats.OG++;
-//                    isOG = true;
-//                }
-
-//                if (isMK && isCSG)
-//                {
-//                    playerStats.MKCSGPoint += Bll.GuessPoint.MKCSGPoint;
-//                    playerStats.MKCSG++;
-//                }
-//                else
-//                {
-//                    if (isMK && isGK)
-//                    {
-//                        if (match.HomeScore.Value == match.AwayScore.Value)
-//                        {
-//                            playerStats.MKGKPoint += Bll.GuessPoint.DrawMKPoint;
-//                            playerStats.MKGKDraw++;
-//                        }
-//                        else
-//                        {
-//                            playerStats.MKGKPoint += Bll.GuessPoint.MKGKPoint;
-//                            playerStats.MKGK++;
-//                        }
-//                    }
-//                    else
-//                    {
-//                        if (isMK && isOG)
-//                        {
-//                            playerStats.MKOGPoint += Bll.GuessPoint.MKOGPoint;
-//                            playerStats.MKOG++;
-//                        }
-//                        else
-//                        {
-//                            if (isMK)
-//                            {
-//                                playerStats.MKPoint += Bll.GuessPoint.MKPoint;
-//                                playerStats.MK++;
-//                            }
-//                            else
-//                            {
-//                                if (isCSG)
-//                                {
-//                                    playerStats.CSGPoint += Bll.GuessPoint.CSGPoint;
-//                                    playerStats.CSG++;
-//                                }
-//                                else
-//                                {
-//                                    if (isOG)
-//                                    {
-//                                        playerStats.OGPoint += Bll.GuessPoint.OGPoint;
-//                                        playerStats.OG++;
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        return indexBefore.CompareTo(indexNow);
+    }
 
 
-//    }
+    //public PlayerStatModel GetPlayerStatsFromGuesses(List<GuessModel> guesses, bool isMax = false)
+    //{
+    //    PlayerStatModel playerStats = new PlayerStatModel();
+    //    playerStats.Count = guesses.Count;
+    //    playerStats.Max = isMax;
 
-//    return playerStats;
+    //    foreach (var guess in guesses)
+    //    {
+    //        MatchModel match = Model.Matches.Where(m => m.Id == guess.MatchId).First();
 
-//}
+    //        if (match.HomeScore.HasValue) //game has been playing
+    //        {
+    //            if (match.HomeScore.Value == guess.HomeScore && match.AwayScore.Value == guess.AwayScore)
+    //            {
+    //                playerStats.TT++;
+    //                //playerStats.GK++;
+    //                //playerStats.MK++;
+    //                //playerStats.CSG++;
+    //                //playerStats.OG++;
+    //                playerStats.TTPoint += Bll.GuessPoint.TTPoint;
+    //            }
+    //            else
+    //            {
+    //                bool isGK = false;
+    //                if (Math.Abs(match.HomeScore.Value - match.AwayScore.Value) == Math.Abs(guess.HomeScore - guess.AwayScore) &&
+    //                    ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore)
+    //                    || (match.HomeScore.Value <= match.AwayScore.Value && guess.HomeScore <= guess.AwayScore)))
+    //                {
+    //                    //playerStats.GK++;
+    //                    isGK = true;
+    //                }
+
+    //                bool isMK = false;
+    //                if ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore) ||
+    //                    (match.HomeScore.Value < match.AwayScore.Value && guess.HomeScore < guess.AwayScore) ||
+    //                    (match.HomeScore.Value == match.AwayScore.Value && guess.HomeScore == guess.AwayScore))
+    //                {
+    //                    //playerStats.MK++;
+    //                    isMK = true;
+    //                }
+
+    //                bool isCSG = false;
+    //                if (match.HomeScore.Value == guess.HomeScore || match.AwayScore.Value == guess.AwayScore)
+    //                {
+    //                    //playerStats.CSG++;
+    //                    isCSG = true;
+    //                    //if (isMK)
+    //                    //{
+    //                    //    playerStats.Bonus += 2;
+    //                    //}
+    //                }
+
+    //                bool isOG = false;
+    //                if (match.HomeScore.Value + match.AwayScore.Value == guess.HomeScore + guess.AwayScore)
+    //                {
+    //                    //playerStats.OG++;
+    //                    isOG = true;
+    //                }
+
+    //                if (isMK && isCSG)
+    //                {
+    //                    playerStats.MKCSGPoint += Bll.GuessPoint.MKCSGPoint;
+    //                    playerStats.MKCSG++;
+    //                }
+    //                else
+    //                {
+    //                    if (isMK && isGK)
+    //                    {
+    //                        if (match.HomeScore.Value == match.AwayScore.Value)
+    //                        {
+    //                            playerStats.MKGKPoint += Bll.GuessPoint.DrawMKPoint;
+    //                            playerStats.MKGKDraw++;
+    //                        }
+    //                        else
+    //                        {
+    //                            playerStats.MKGKPoint += Bll.GuessPoint.MKGKPoint;
+    //                            playerStats.MKGK++;
+    //                        }
+    //                    }
+    //                    else
+    //                    {
+    //                        if (isMK && isOG)
+    //                        {
+    //                            playerStats.MKOGPoint += Bll.GuessPoint.MKOGPoint;
+    //                            playerStats.MKOG++;
+    //                        }
+    //                        else
+    //                        {
+    //                            if (isMK)
+    //                            {
+    //                                playerStats.MKPoint += Bll.GuessPoint.MKPoint;
+    //                                playerStats.MK++;
+    //                            }
+    //                            else
+    //                            {
+    //                                if (isCSG)
+    //                                {
+    //                                    playerStats.CSGPoint += Bll.GuessPoint.CSGPoint;
+    //                                    playerStats.CSG++;
+    //                                }
+    //                                else
+    //                                {
+    //                                    if (isOG)
+    //                                    {
+    //                                        playerStats.OGPoint += Bll.GuessPoint.OGPoint;
+    //                                        playerStats.OG++;
+    //                                    }
+    //                                }
+    //                            }
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+
+
+    //    }
+
+    //    return playerStats;
+
+    //}
 }
 
 <div class="black-text" style="font-size:11px; text-align:center; margin-left: 2px">
@@ -178,26 +187,35 @@
         <th class="borderleftandtopandright width35">P</th>
     </tr>
 
-    @{ List<PlayerStatModel> playerStatsModel = new List<PlayerStatModel>();}
+    @{ 
+        List<PlayerStatModel> playerStatsModel = new List<PlayerStatModel>();
+        List<PlayerStatModel> playerStatsModelBefore = new List<PlayerStatModel>();
 
-    @foreach (var m in Model.UsersWithGuessesAndStats)
-    {
-        PlayerStatModel playerStats = m.PlayerStats;
-        //PlayerStatModel playerStats = GetPlayerStatsFromGuesses(m.Guesses.ToList(), false);
-        playerStats.UserName = m.User.Name;
-        playerStats.UserId = m.User.Id;
-        playerStatsModel.Add(playerStats);
+        foreach (var m in Model.UsersWithGuessesAndStats)
+        {
+            PlayerStatModel playerStats = m.PlayerStats;
+            playerStats.UserName = m.User.Name;
+            playerStats.UserId = m.User.Id;
+            playerStatsModel.Add(playerStats);
+
+            PlayerStatModel playerStatsBefore = m.PlayerStatsBefore;
+            playerStatsBefore.UserName = m.User.Name;
+            playerStatsBefore.UserId = m.User.Id;
+            playerStatsModelBefore.Add(playerStatsBefore);
+        }
+
+        int i = 1;
+        playerStatsModel = playerStatsModel.OrderByDescending(p => p.Points).ThenByDescending(p => p.TTPoint).ThenByDescending(p => p.MKGKPoint + p.MKCSGPoint).ThenByDescending(p => p.MKOGPoint).ThenByDescending(p => p.MKPoint).ThenByDescending(p => p.CSGPoint).ThenByDescending(p => p.OGPoint).ThenBy(p => p.Count).ThenBy(p => p.UserName).ToList();
+        playerStatsModelBefore = playerStatsModelBefore.OrderByDescending(p => p.Points).ThenByDescending(p => p.TTPoint).ThenByDescending(p => p.MKGKPoint + p.MKCSGPoint).ThenByDescending(p => p.MKOGPoint).ThenByDescending(p => p.MKPoint).ThenByDescending(p => p.CSGPoint).ThenByDescending(p => p.OGPoint).ThenBy(p => p.Count).ThenBy(p => p.UserName).ToList();
     }
-
-    @{int i = 1;}
     @*@foreach (var m in playerStatsModel.OrderByDescending(p => p.Points).ThenByDescending(p => p.TT).ThenByDescending(p => p.GK).ThenByDescending(p => p.MK).ThenByDescending(p => p.CSG).ThenByDescending(p => p.OG).ThenBy(p => p.Count).ThenBy(p => p.UserName))*@
-    @foreach (var m in playerStatsModel.OrderByDescending(p => p.Points).ThenByDescending(p => p.TTPoint).ThenByDescending(p => p.MKGKPoint + p.MKCSGPoint).ThenByDescending(p => p.MKOGPoint).ThenByDescending(p => p.MKPoint).ThenByDescending(p => p.CSGPoint).ThenByDescending(p => p.OGPoint).ThenBy(p => p.Count).ThenBy(p => p.UserName))
+    @foreach (var m in playerStatsModel)
     {
         if (m.UserId == ViewBag.user.Id)
         {
             <tr class="red-text" data="@m.UserId">
                 <td class="borderleftandtop" >@(i++)</td>
-                <td class="borderleftandtop"></td>
+                <td class="borderleftandtop"><div class="@(GetUserPositionChange(m.UserId,playerStatsModel, playerStatsModelBefore) > 0 ? "triangle-up" :  (GetUserPositionChange(m.UserId,playerStatsModel, playerStatsModelBefore) < 0 ? "triangle-down" : "rectangle"))" style="text-align:center"></div></td>
                 <td id="userName" class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td class="borderleftandtop">@m.Count</td>
                 <td class="tooltips borderleftandtop" data="TT">@m.TT</td>
@@ -216,7 +234,7 @@
             <tr data="@m.UserId">
 
                 <td class="borderleftandtop">@(i++)</td>
-                <td class="borderleftandtop"></td>
+                <td class="borderleftandtop"><div class="@(GetUserPositionChange(m.UserId,playerStatsModel, playerStatsModelBefore) > 0 ? "triangle-up" :  (GetUserPositionChange(m.UserId,playerStatsModel, playerStatsModelBefore) < 0 ? "triangle-down" : "rectangle"))" style="text-align:center"></div></td>
                 <td id="userName" class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td class="borderleftandtop">@m.Count</td>
                 <td class="tooltips borderleftandtop" data="TT">@m.TT</td>
