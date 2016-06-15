@@ -139,6 +139,27 @@ body.loading .modal {
     100%   {background:#1253A4;}
 }
 
+.animatedbutton2 {
+        
+    background: #1253A4;
+    animation:mysecond 1s;
+    -moz-animation:mysecond 1s infinite; /* Firefox */
+    -webkit-animation:mysecond 1s infinite; /* Safari and Chrome */
+}
+
+@-moz-keyframes mysecond { /* Firefox */
+    0%   {background:#FFD464;}
+    50%  {background:#F26964;}
+    100%   {background:#FFD464;}
+}
+
+@-webkit-keyframes mysecond /* Safari and Chrome */
+{
+    0%   {background:#FFD464;}
+    50%  {background:#F26964;}
+    100%   {background:#FFD464;}
+}
+
 .tooltips{
     cursor: pointer;
 }

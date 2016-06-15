@@ -83,12 +83,12 @@ namespace Bll
             }
         }
         
-        public static IEnumerable<Guess> GetGuessesByMatch(int matchId)
+        public static List<Guess> GetGuessesByMatch(int matchId)
         {
             using (var db = new EC2016CodeFirst())
             {
 
-                return db.Guesses.Include("User").Where(g => g.MatchId == matchId);
+                return db.Guesses.Include("User").Where(g => g.MatchId == matchId).ToList();
 
             }
         }

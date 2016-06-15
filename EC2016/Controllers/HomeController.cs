@@ -250,7 +250,7 @@ namespace EC2016.Controllers
         public ActionResult MatchGuessStatistic(int matchId)
         {
 
-            IEnumerable<Guess> guesses = DatabaseManager.GetGuessesByMatch(matchId);
+            List<Guess> guesses = DatabaseManager.GetGuessesByMatch(matchId);
             Match match = DatabaseManager.GetMatchById(matchId,true);
 
             MatchGuessModel model = ModelHelper.CreateMatchGuessModel(guesses, match);

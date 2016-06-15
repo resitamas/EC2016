@@ -28,6 +28,16 @@
                 }
             });
 
+            $('.matchTooltip').tooltipster({
+                contentAsHTML: true,
+                trigger: 'click',
+                theme: ['tooltipster-noir', 'tooltipster-noir-customized'],
+                functionBefore: function (instance, helper) {
+                    //$(helper.origin).addClass("animatedbutton2");
+                    instance.content(makeTableOfMatchGuesses($(helper.origin).attr("data")), helper.origin);
+                }
+            });
+
             $("#gamestanding tr:last").children().addClass("borderbottom");
 
             if (str == "guesses") {
@@ -54,6 +64,30 @@
             }
 
         });
+
+        function makeTableOfMatchGuesses(matchid, button) {
+
+            var content = "";
+
+            $.ajax({
+                url: "/Home/MatchGuessStatistic?matchId=" + matchid,// + "&userName=" + username + "&type=" + type,
+                method: "GET",
+                async: false,
+                beforeSend: function () {
+                    //$(button).addClass("animatedbutton2");
+                },
+                complete: function () {
+                    //$(button).removeClass("animatedbutton2");
+                },
+                success: function (data) {
+                    content = data;
+                }
+
+            });
+
+            return content;
+
+        }
 
         function makeTableOfUserResults(userid, username, type) {
 

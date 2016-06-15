@@ -8,10 +8,6 @@ namespace Bll
 {
     class GuessType
     {
-        //enum GuessType
-        //{
-        //    TT, MKCSG, MKGK, MKGKD, MKOG, MK, CSG, OG
-        //}
 
         public const string TT = "TT";
         public const string MKCSG = "MKCSG";
