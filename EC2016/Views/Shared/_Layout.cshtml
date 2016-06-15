@@ -6,43 +6,18 @@
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
     <title>@ViewBag.Title - EB 2016 Játék</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/tooltipster")
+    @Styles.Render("~/Content/tooltipster1")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body @*style="min-width: 1185px;"*@ class="yellow-background">
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>*@
     <div class="container body-content" background-color:grey">
         @RenderBody()
-        @*<hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>*@
     </div>
-    @*<div class="modal"><!-- Place at bottom of page --></div>*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/tooltipster")
+    @Scripts.Render("~/bundles/tooltipster1")
     @RenderSection("scripts", required: false)
 </body>
 </html>

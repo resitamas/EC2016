@@ -71,7 +71,7 @@
 
     public bool IsShowGuessesButtonHidden(EC2016.Models.MatchModel match)
     {
-        return match.HomeScore.HasValue;
+        return match.HomeScore.HasValue || match.Date.AddMinutes(-5).CompareTo(DateTime.Now) < 0;
     }
 
 }
@@ -90,7 +90,7 @@
             <table data="@matches.ElementAt(j).Id" style="margin: 0 auto; margin-top:10px;">
                
                 <tr>
-                    <td colspan="3" style="text-align:center"><button type="button" @(matches.ElementAt(j).HomeScore.HasValue ? "" : "hidden") data="@matches.ElementAt(j).Id" class="matchTooltip yellow-background" style="font-size: 10px">Tippek mutatása</button></td>
+                    <td colspan="3" style="text-align:center"><button type="button" @(IsShowGuessesButtonHidden(matches.ElementAt(j)) ? "" : "hidden") data="@matches.ElementAt(j).Id" class="matchTooltip yellow-background" style="font-size: 10px">Tippek mutatása</button></td>
                     <td colspan="1" style="border-left:1px solid black; border-right:1px solid black;border-top:1px solid black">Eredmény</td>
                     <td colspan="1" style="border-right:1px solid black;border-top:1px solid black">Tippem</td>
                     <td colspan="2"></td>

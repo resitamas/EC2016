@@ -290,7 +290,6 @@ namespace EC2016.Helper
 
         public static GuessType GetGuessType(Guess guess, Match match)
         {
-            
             if (match.HomeScore.Value == guess.HomeScore && match.AwayScore.Value == guess.AwayScore)
             {
                 return GuessType.TT;
@@ -391,40 +390,49 @@ namespace EC2016.Helper
 
             model.HomeTeamName = match.Team1.Name;
             model.AwayTeamName = match.Team.Name;
-            model.HomeScore = match.HomeScore.HasValue ? match.HomeScore.Value.ToString() : "-";
-            model.AwayScore = match.AwayScore.HasValue ? match.AwayScore.Value.ToString() : "-";
+            model.HomeScore = match.HomeScore.HasValue ? match.HomeScore.Value.ToString() : "";
+            model.AwayScore = match.AwayScore.HasValue ? match.AwayScore.Value.ToString() : "";
 
             foreach (var guess in guesses)
             {
-                switch (GetGuessType(guess, match))
+                if (match.HomeScore.HasValue)
                 {
-                    case GuessType.TT:
-                        model.GuessList.ElementAt(0).Add(GetShortUserName(guess.User.UserName)+ " ("+guess.HomeScore+"-"+guess.AwayScore+")");
-                        break;
-                    case GuessType.MKCSG:
-                        model.GuessList.ElementAt(1).Add(GetShortUserName(guess.User.UserName)+ " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
-                        break;
-                    case GuessType.MKGK:
-                        model.GuessList.ElementAt(2).Add(GetShortUserName(guess.User.UserName)+ " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
-                        break;
-                    case GuessType.MKGKD:
-                        model.GuessList.ElementAt(3).Add(GetShortUserName(guess.User.UserName)+ " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
-                        break;
-                    case GuessType.MKOG:
-                        model.GuessList.ElementAt(4).Add(GetShortUserName(guess.User.UserName)+ " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
-                        break;
-                    case GuessType.MK:
-                        model.GuessList.ElementAt(5).Add(GetShortUserName(guess.User.UserName)+ " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
-                        break;
-                    case GuessType.CSG:
-                        model.GuessList.ElementAt(6).Add(GetShortUserName(guess.User.UserName)+ " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
-                        break;
-                    case GuessType.OG:
-                        model.GuessList.ElementAt(7).Add(GetShortUserName(guess.User.UserName)+ " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
-                        break;
-                    default:
-                        break;
+                    switch (GetGuessType(guess, match))
+                    {
+                        case GuessType.TT:
+                            model.GuessList.ElementAt(0).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+                        case GuessType.MKCSG:
+                            model.GuessList.ElementAt(1).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+                        case GuessType.MKGK:
+                            model.GuessList.ElementAt(2).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+                        case GuessType.MKGKD:
+                            model.GuessList.ElementAt(3).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+                        case GuessType.MKOG:
+                            model.GuessList.ElementAt(4).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+                        case GuessType.MK:
+                            model.GuessList.ElementAt(5).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+                        case GuessType.CSG:
+                            model.GuessList.ElementAt(6).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+                        case GuessType.OG:
+                            model.GuessList.ElementAt(7).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else
+                {
+                    model.GuessList.ElementAt(0).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                }
+
+
             }
 
             return model;
