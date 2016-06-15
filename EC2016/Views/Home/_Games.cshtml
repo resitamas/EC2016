@@ -195,19 +195,19 @@
     {
         if (m.UserId == ViewBag.user.Id)
         {
-            <tr class="red-text" data-userid="@m.UserId">
+            <tr class="red-text" data="@m.UserId">
                 <td class="borderleftandtop" >@(i++)</td>
                 <td class="borderleftandtop"></td>
-                <td class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
+                <td id="userName" class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td class="borderleftandtop">@m.Count</td>
-                <td class="tooltips borderleftandtop" data-pointType="TT">@m.TT</td>
-                <td class="tooltips borderleftandtop " data-pointType="MKCSG">@m.MKCSG</td>
-                <td class="tooltips borderleftandtop" data-pointType="MKGK">@m.MKGK</td>
-                <td class="tooltips borderleftandtop" data-pointType="MKGKDRAW">@m.MKGKDraw</td>
-                <td class="tooltips borderleftandtop" data-pointType="MKOG">@m.MKOG</td>
-                <td class="tooltips borderleftandtop" data-pointType="MK">@m.MK</td>
-                <td class="tooltips borderleftandtop" data-pointType="CSG">@m.CSG</td>
-                <td class="tooltips borderleftandtop" data-pointType="OG">@m.OG</td>
+                <td class="tooltips borderleftandtop" data="TT">@m.TT</td>
+                <td class="tooltips borderleftandtop " data="MKCSG">@m.MKCSG</td>
+                <td class="tooltips borderleftandtop" data="MKGK">@m.MKGK</td>
+                <td class="tooltips borderleftandtop" data="MKGKDRAW">@m.MKGKDraw</td>
+                <td class="tooltips borderleftandtop" data="MKOG">@m.MKOG</td>
+                <td class="tooltips borderleftandtop" data="MK">@m.MK</td>
+                <td class="tooltips borderleftandtop" data="CSG">@m.CSG</td>
+                <td class="tooltips borderleftandtop" data="OG">@m.OG</td>
                 <td class="borderleftandtopandright">@m.Points</td>
             </tr>
         }
@@ -217,16 +217,16 @@
 
                 <td class="borderleftandtop">@(i++)</td>
                 <td class="borderleftandtop"></td>
-                <td class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
+                <td id="userName" class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td class="borderleftandtop">@m.Count</td>
-                <td class="tooltips borderleftandtop" data-pointType="TT">@m.TT</td>
-                <td class="tooltips borderleftandtop " data-pointType="MKCSG">@m.MKCSG</td>
-                <td class="tooltips borderleftandtop" data-pointType="MKGK">@m.MKGK</td>
-                <td class="tooltips borderleftandtop" data-pointType="MKGKDRAW">@m.MKGKDraw</td>
-                <td class="tooltips borderleftandtop" data-pointType="MKOG">@m.MKOG</td>
-                <td class="tooltips borderleftandtop" data-pointType="MK">@m.MK</td>
-                <td class="tooltips borderleftandtop" data-pointType="CSG">@m.CSG</td>
-                <td class="tooltips borderleftandtop" data-pointType="OG">@m.OG</td>
+                <td class="tooltips borderleftandtop" data="TT">@m.TT</td>
+                <td class="tooltips borderleftandtop " data="MKCSG">@m.MKCSG</td>
+                <td class="tooltips borderleftandtop" data="MKGK">@m.MKGK</td>
+                <td class="tooltips borderleftandtop" data="MKGKDRAW">@m.MKGKDraw</td>
+                <td class="tooltips borderleftandtop" data="MKOG">@m.MKOG</td>
+                <td class="tooltips borderleftandtop" data="MK">@m.MK</td>
+                <td class="tooltips borderleftandtop" data="CSG">@m.CSG</td>
+                <td class="tooltips borderleftandtop" data="OG">@m.OG</td>
                 <td class="borderleftandtopandright">@m.Points</td>
             </tr>
         }
@@ -246,7 +246,4 @@
     <b>ÖG: </b>@Bll.GuessPoint.OGPoint pont<br />
 </div>*@
 
-<div id="tooltip_content" style="display:none">
-    <h4>Rési Tamás</h4>
-</div>
 

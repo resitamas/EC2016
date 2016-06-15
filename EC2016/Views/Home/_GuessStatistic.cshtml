@@ -1,0 +1,36 @@
+﻿@model EC2016.Models.GuessStatistic
+
+
+<h4>@Model.UserName</h4>
+<h6>@Model.Type</h6>
+@if (Model.Stats.Count == 0)
+{
+    <h6>Üres</h6>
+}
+else
+{
+    <table border="1" style="text-align:center">
+        <tr>
+            <th style="text-align:center">Hazai</th>
+            <th style="text-align:center">Vendég</th>
+            <th colspan="2" style="text-align:center">Ered.</th>
+            <th colspan="2" style="text-align:center">Tipp</th>
+        </tr>
+
+        @foreach (var m in Model.Stats)
+        {
+
+            <tr>
+                <td>@m.homeTeam</td>
+                <td>@m.awayTeam</td>
+                <td>@m.homeScore</td>
+                <td>@m.awayScore</td>
+                <td>@m.homeGuess</td>
+                <td>@m.awayGuess</td>
+            </tr>
+        }
+
+    </table>
+}
+
+

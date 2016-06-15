@@ -5,7 +5,7 @@
 }
 
 @section scripts {
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
 
             resize();
@@ -21,7 +21,11 @@
             var str = "@ViewBag.menu";
 
             $('.tooltips').tooltipster({
-                content: makeTableOfUserResults($(this).parent().attr("data-userid"))
+                contentAsHTML: true,
+                theme: ['tooltipster-noir', 'tooltipster-noir-customized'],
+                functionBefore: function (instance, helper) {
+                    instance.content(makeTableOfUserResults($(helper.origin).parent().attr("data"), $(helper.origin).siblings("#userName:first").text() ,$(helper.origin).attr("data")));
+                }
             });
 
             $("#gamestanding tr:last").children().addClass("borderbottom");
@@ -51,10 +55,23 @@
 
         });
 
-        function makeTableOfUserResults(userid) {
+        function makeTableOfUserResults(userid, username, type) {
 
+            var content = "";
+
+            $.ajax({
+                url: "/Home/GuessStatistic?userId=" + userid + "&userName=" + username + "&type=" + type,
+                method: "GET",
+                async: false,
+                success: function (data) {
+                    content = data;
+                }
+
+            });
+
+            return content;
         }
-
+        
         function getGuess(data) {
 
             var table = $("table[data=" + data.id + "]");
@@ -66,32 +83,21 @@
         }
 
         function showIndicator(id) {
-            //alert("showindicator");
-            //$body.addClass("loading");
             $("button[data=" + id + "]").prop('disabled', true);
             $("button[data=" + id + "]").addClass("animatedbutton");
-
         }
 
         function dismissIndicator(id) {
-            //$body.removeClass("loading");
             $("button[data=" + id + "]").prop('disabled', false);
             $("button[data=" + id + "]").removeClass("animatedbutton");
         }
 
         function teamNameClicked(element) {
-
             $(element).next().toggle();
-
         }
 
-
-        
-
         $(window).resize(function () {
-
             resize();
-
         });
 
         function resize() {

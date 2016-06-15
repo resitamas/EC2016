@@ -32,7 +32,7 @@ namespace Bll
         {
             using (var db = new EC2016CodeFirst())
             {
-                return db.Matches.ToList();
+                return db.Matches.Include("Team").Include("Team1").ToList();
             }
         }
 
@@ -68,14 +68,31 @@ namespace Bll
             }
         }
 
-        public static Match GetMatchById(int matchId)
+        public static Match GetMatchById(int matchId, bool withTeams = false)
         {
             using (var db = new EC2016CodeFirst())
             {
-                return db.Matches.Where(m => m.Id == matchId).First();
+                if (withTeams)
+                {
+                    return db.Matches.Include("Team").Include("Team1").Where(m => m.Id == matchId).First();
+                }
+                else
+                {
+                    return db.Matches.Where(m => m.Id == matchId).First();
+                }
             }
         }
         
+        public static IEnumerable<Guess> GetGuessesByMatch(int matchId)
+        {
+            using (var db = new EC2016CodeFirst())
+            {
+
+                return db.Guesses.Include("User").Where(g => g.MatchId == matchId);
+
+            }
+        }
+
         #endregion
 
         #region POST

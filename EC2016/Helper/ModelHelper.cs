@@ -142,13 +142,13 @@ namespace EC2016.Helper
             public PlayerMatchesWithGuesses PlayerMatchesWithGuesses { get; set; }
         }
 
-        public static Wrapper GetPlayerStatsFromGuesses(IEnumerable<GuessModel> guesses, List<MatchModel> matches, bool isMax = false)
+
+        public static Wrapper GetPlayerStatsFromGuesses(IEnumerable<GuessModel> guesses, List<MatchModel> matches)
         {
             Wrapper wrapper = new Wrapper();
 
             PlayerStatModel playerStats = new PlayerStatModel();
             playerStats.Count = guesses.Count();
-            playerStats.Max = isMax;
 
             PlayerMatchesWithGuesses playerMatchesWithGuesses = new PlayerMatchesWithGuesses();
 
@@ -166,7 +166,7 @@ namespace EC2016.Helper
                         //playerStats.CSG++;
                         //playerStats.OG++;
                         playerStats.TTPoint += GuessPoint.TTPoint;
-                        playerMatchesWithGuesses.TTGuessesByMatch.Add(match.Id, guess.Id);
+                        playerMatchesWithGuesses.TTGuessesByMatch.Add(guess.Id, match.Id);
                     }
                     else
                     {
@@ -280,6 +280,94 @@ namespace EC2016.Helper
 
             return wrapper;
             //return playerStats;
+
+        }
+
+        enum GuessType
+        {
+            TT, MKCSG, MKGK, MKGKD, MKOG, MK, CSG, OG
+        }
+
+        public static GuessType GetGuessType(Guess guess)
+        {
+
+        }
+
+        public static string GetShortUserName(string name)
+        {
+            string[] splittedName = name.Split(' ');
+
+            return splittedName.Count() == 1 ? name : splittedName.ElementAt(0) + " " + splittedName.ElementAt(1).ElementAt(0) + ".";
+        }
+
+        public static MatchGuessModel CreateMatchGuessModel(IEnumerable<Guess> guesses, Match match)
+        {
+            MatchGuessModel model = new MatchGuessModel();
+
+            model.HomeTeamName = match.Team1.Name;
+            model.AwayTeamName = match.Team.Name;
+            model.HomeScore = match.HomeScore.HasValue ? match.HomeScore.Value.ToString() : "-";
+            model.AwayScore = match.AwayScore.HasValue ? match.AwayScore.Value.ToString() : "-";
+
+            foreach (var guess in guesses)
+            {
+                switch (GetGuessType(guess))
+                {
+                    case GuessType.TT:
+                        model.GuessList.ElementAt(0).Add(GetShortUserName(guess.User.UserName));
+                        break;
+                    case GuessType.MKCSG:
+                        model.GuessList.ElementAt(1).Add(GetShortUserName(guess.User.UserName));
+                        break;
+                    case GuessType.MKGK:
+                        model.GuessList.ElementAt(2).Add(GetShortUserName(guess.User.UserName));
+                        break;
+                    case GuessType.MKGKD:
+                        model.GuessList.ElementAt(3).Add(GetShortUserName(guess.User.UserName));
+                        break;
+                    case GuessType.MKOG:
+                        model.GuessList.ElementAt(4).Add(GetShortUserName(guess.User.UserName));
+                        break;
+                    case GuessType.MK:
+                        model.GuessList.ElementAt(5).Add(GetShortUserName(guess.User.UserName));
+                        break;
+                    case GuessType.CSG:
+                        model.GuessList.ElementAt(6).Add(GetShortUserName(guess.User.UserName));
+                        break;
+                    case GuessType.OG:
+                        model.GuessList.ElementAt(7).Add(GetShortUserName(guess.User.UserName));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return model;
+        } 
+
+        public static List<GuessStatistic.StatHelper> GetStatHelpersFromPlayerMatchesWithGuesses(List<Guess> guesses, List<Match> matches, Dictionary<int,int> model)
+        {
+
+            List<GuessStatistic.StatHelper> helper = new List<GuessStatistic.StatHelper>();
+
+            foreach (var m in model)
+            {
+                GuessStatistic.StatHelper h = new GuessStatistic.StatHelper();
+
+                Match match = matches.Where(ma => ma.Id == m.Value).First();
+                h.homeScore = match.HomeScore.HasValue ? match.HomeScore.Value.ToString() : "-";
+                h.awayScore = match.AwayScore.HasValue ? match.AwayScore.Value.ToString() : "-";
+                h.homeTeam = match.Team1.Name;
+                h.awayTeam = match.Team.Name;
+
+                Guess g = guesses.Where(gu => gu.Id == m.Key).First();
+                h.homeGuess = g.HomeScore.ToString();
+                h.awayGuess = g.AwayScore.ToString();
+
+                helper.Add(h);
+            }
+
+            return helper;
 
         }
 

@@ -1,0 +1,57 @@
+﻿@using EC2016.Helper
+@model EC2016.Models.MatchGuessModel
+
+@functions {
+
+    public string GetElement(List<string> list, int index)
+    {
+        try
+        {
+            return list.ElementAt(index);
+        }
+        catch (Exception)
+        {
+
+        }
+
+        return "";
+    }
+
+}
+
+<h4>@Model.HomeTeamName @Model.HomeScore - @Model.AwayScore @Model.AwayTeamName</h4>
+
+<table border="1">
+    <tr>
+        <th>TT</th>
+        <th>MK + CSG</th>
+        <th>MK + GK</th>
+        <th>MK + GK (D)</th>
+        <th>MK + OG</th>
+        <th>MK</th>
+        <th>CSG</th>
+        <th>OG</th>
+    </tr>
+
+    @{ 
+        IEnumerable<int> maxes = Model.GuessList.Select(l => l.Count);
+        int maxValue = maxes.Max();
+        int maxIndex = maxes.MaxIndex();
+    }
+
+    @for (int i = 0; i < maxValue; i++)
+    {
+        <tr>
+            <td>@GetElement(Model.GuessList.ElementAt(0), i)</td>
+            <td>@GetElement(Model.GuessList.ElementAt(1), i)</td>
+            <td>@GetElement(Model.GuessList.ElementAt(2), i)</td>
+            <td>@GetElement(Model.GuessList.ElementAt(3), i)</td>
+            <td>@GetElement(Model.GuessList.ElementAt(4), i)</td>
+            <td>@GetElement(Model.GuessList.ElementAt(5), i)</td>
+            <td>@GetElement(Model.GuessList.ElementAt(6), i)</td>
+            <td>@GetElement(Model.GuessList.ElementAt(7),i)</td>
+        </tr>
+    }
+
+
+</table>

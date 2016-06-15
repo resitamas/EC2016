@@ -187,14 +187,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\LINQHelper.cs" />
     <Compile Include="Helper\ModelHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddMatchModel.cs" />
     <Compile Include="Models\GuessGameModel.cs" />
     <Compile Include="Models\GuessModel.cs" />
+    <Compile Include="Models\GuessStatistic.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MatchGuessModel.cs" />
     <Compile Include="Models\MatchModel.cs" />
     <Compile Include="Models\PlayerMatchesWithGuesses.cs" />
     <Compile Include="Models\PlayerStatModel.cs" />
@@ -331,6 +334,8 @@
     <Content Include="Views\Home\_Matches.cshtml" />
     <Content Include="Views\Home\_Teams.cshtml" />
     <Content Include="Views\Home\_Games.cshtml" />
+    <Content Include="Views\Home\_GuessStatistic.cshtml" />
+    <Content Include="Views\Home\_MatchGuessStatistic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

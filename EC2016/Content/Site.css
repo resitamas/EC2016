@@ -167,3 +167,19 @@ body.loading .modal {
 .borderbottom {
     border-bottom: 1px solid black;
 }
+
+.tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-box {
+	background: #F4F4F2;
+	border: 2px solid #1253A4;
+	border-radius: 6px;
+	box-shadow: 5px 5px 2px 0 rgba(0,0,0,0.4);
+}
+
+.tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-content {
+	color: #F26964;
+	padding: 8px;
+}
+
+/*.tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-arrow-background {
+	border-color: #1253A4;
+}*/
