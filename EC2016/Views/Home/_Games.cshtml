@@ -4,123 +4,130 @@
 
 @functions {
 
-    public PlayerStatModel GetPlayerStatsFromGuesses(List<GuessModel> guesses, bool isMax = false)
-    {
-        PlayerStatModel playerStats = new PlayerStatModel();
-        playerStats.Count = guesses.Count;
-        playerStats.Max = isMax;
+//public PlayerStatModel GetPlayerStatsFromGuesses(List<GuessModel> guesses, bool isMax = false)
+//{
+//    PlayerStatModel playerStats = new PlayerStatModel();
+//    playerStats.Count = guesses.Count;
+//    playerStats.Max = isMax;
 
-        foreach (var guess in guesses)
-        {
-            MatchModel match = Model.Matches.Where(m => m.Id == guess.MatchId).First();
+//    foreach (var guess in guesses)
+//    {
+//        MatchModel match = Model.Matches.Where(m => m.Id == guess.MatchId).First();
 
-            if (match.HomeScore.HasValue) //game has been playing
-            {
-                if (match.HomeScore.Value == guess.HomeScore && match.AwayScore.Value == guess.AwayScore)
-                {
-                    playerStats.TT++;
-                    playerStats.GK++;
-                    playerStats.MK++;
-                    playerStats.CSG++;
-                    playerStats.OG++;
-                    playerStats.TTPoint += Bll.GuessPoint.TTPoint;
-                }
-                else
-                {
-                    bool isGK = false;
-                    if (Math.Abs(match.HomeScore.Value - match.AwayScore.Value) == Math.Abs(guess.HomeScore - guess.AwayScore) &&
-                        ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore)
-                        || (match.HomeScore.Value <= match.AwayScore.Value && guess.HomeScore <= guess.AwayScore)))
-                    {
-                        playerStats.GK++;
-                        isGK = true;
-                    }
+//        if (match.HomeScore.HasValue) //game has been playing
+//        {
+//            if (match.HomeScore.Value == guess.HomeScore && match.AwayScore.Value == guess.AwayScore)
+//            {
+//                playerStats.TT++;
+//                //playerStats.GK++;
+//                //playerStats.MK++;
+//                //playerStats.CSG++;
+//                //playerStats.OG++;
+//                playerStats.TTPoint += Bll.GuessPoint.TTPoint;
+//            }
+//            else
+//            {
+//                bool isGK = false;
+//                if (Math.Abs(match.HomeScore.Value - match.AwayScore.Value) == Math.Abs(guess.HomeScore - guess.AwayScore) &&
+//                    ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore)
+//                    || (match.HomeScore.Value <= match.AwayScore.Value && guess.HomeScore <= guess.AwayScore)))
+//                {
+//                    //playerStats.GK++;
+//                    isGK = true;
+//                }
 
-                    bool isMK = false;
-                    if ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore) ||
-                        (match.HomeScore.Value < match.AwayScore.Value && guess.HomeScore < guess.AwayScore) ||
-                        (match.HomeScore.Value == match.AwayScore.Value && guess.HomeScore == guess.AwayScore))
-                    {
-                        playerStats.MK++;
-                        isMK = true;
-                    }
+//                bool isMK = false;
+//                if ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore) ||
+//                    (match.HomeScore.Value < match.AwayScore.Value && guess.HomeScore < guess.AwayScore) ||
+//                    (match.HomeScore.Value == match.AwayScore.Value && guess.HomeScore == guess.AwayScore))
+//                {
+//                    //playerStats.MK++;
+//                    isMK = true;
+//                }
 
-                    bool isCSG = false;
-                    if (match.HomeScore.Value == guess.HomeScore || match.AwayScore.Value == guess.AwayScore)
-                    {
-                        playerStats.CSG++;
-                        isCSG = true;
-                        //if (isMK)
-                        //{
-                        //    playerStats.Bonus += 2;
-                        //}
-                    }
+//                bool isCSG = false;
+//                if (match.HomeScore.Value == guess.HomeScore || match.AwayScore.Value == guess.AwayScore)
+//                {
+//                    //playerStats.CSG++;
+//                    isCSG = true;
+//                    //if (isMK)
+//                    //{
+//                    //    playerStats.Bonus += 2;
+//                    //}
+//                }
 
-                    bool isOG = false;
-                    if (match.HomeScore.Value + match.AwayScore.Value == guess.HomeScore + guess.AwayScore)
-                    {
-                        playerStats.OG++;
-                        isOG = true;
-                    }
+//                bool isOG = false;
+//                if (match.HomeScore.Value + match.AwayScore.Value == guess.HomeScore + guess.AwayScore)
+//                {
+//                    //playerStats.OG++;
+//                    isOG = true;
+//                }
 
-                    if (isMK && isCSG)
-                    {
-                        playerStats.MKCSGPoint += Bll.GuessPoint.MKCSGPoint;
-                    }
-                    else
-                    {
-                        if (isMK && isGK)
-                        {
-                            if (match.HomeScore.Value == match.AwayScore.Value)
-                            {
-                                playerStats.MKGKPoint += Bll.GuessPoint.DrawMKPoint;
-                            }
-                            else
-                            {
-                                playerStats.MKGKPoint += Bll.GuessPoint.MKGKPoint;
-                            }
-                        }
-                        else
-                        {
-                            if (isMK && isOG)
-                            {
-                                playerStats.MKOGPoint += Bll.GuessPoint.MKOGPoint;
-                            }
-                            else
-                            {
-                                if (isMK)
-                                {
-                                    playerStats.MKPoint += Bll.GuessPoint.MKPoint;
-                                }
-                                else
-                                {
-                                    if (isCSG)
-                                    {
-                                        playerStats.CSGPoint += Bll.GuessPoint.CSGPoint;
-                                    }
-                                    else
-                                    {
-                                        if (isOG)
-                                        {
-                                            playerStats.OGPoint += Bll.GuessPoint.OGPoint;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+//                if (isMK && isCSG)
+//                {
+//                    playerStats.MKCSGPoint += Bll.GuessPoint.MKCSGPoint;
+//                    playerStats.MKCSG++;
+//                }
+//                else
+//                {
+//                    if (isMK && isGK)
+//                    {
+//                        if (match.HomeScore.Value == match.AwayScore.Value)
+//                        {
+//                            playerStats.MKGKPoint += Bll.GuessPoint.DrawMKPoint;
+//                            playerStats.MKGKDraw++;
+//                        }
+//                        else
+//                        {
+//                            playerStats.MKGKPoint += Bll.GuessPoint.MKGKPoint;
+//                            playerStats.MKGK++;
+//                        }
+//                    }
+//                    else
+//                    {
+//                        if (isMK && isOG)
+//                        {
+//                            playerStats.MKOGPoint += Bll.GuessPoint.MKOGPoint;
+//                            playerStats.MKOG++;
+//                        }
+//                        else
+//                        {
+//                            if (isMK)
+//                            {
+//                                playerStats.MKPoint += Bll.GuessPoint.MKPoint;
+//                                playerStats.MK++;
+//                            }
+//                            else
+//                            {
+//                                if (isCSG)
+//                                {
+//                                    playerStats.CSGPoint += Bll.GuessPoint.CSGPoint;
+//                                    playerStats.CSG++;
+//                                }
+//                                else
+//                                {
+//                                    if (isOG)
+//                                    {
+//                                        playerStats.OGPoint += Bll.GuessPoint.OGPoint;
+//                                        playerStats.OG++;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
 
-        }
+//    }
 
-        return playerStats;
+//    return playerStats;
 
-    }
+//}
 }
 
-<div class="black-text" style="font-size:11px; text-align:left; margin-left: 2px">
+<div class="black-text" style="font-size:11px; text-align:center; margin-left: 2px">
     @*<b>Telitalálat (TT): (10 pont)<br /> </b><span>Az eredmény tökéletes eltalálása</span><br />
     <b>Gólkülönbség eltalálása (GK): (6 pont)<br /></b><span>A két csapat által megszerzett gólok különbségének eltalálása (csak ha a győztest is helyesen tippeltük meg)</span><br />
     <b>Mérkőzés kimenetelének eltalálása (MK): (4 pont)<br /></b><span>A győztes csapat vagy a döntetlen eltalálása, 1-X-2, mint a TOTÓ-ban</span><br />
@@ -130,8 +137,11 @@
     <b>Tippelések száma (T):<br /></b><span>A játékos hány meccshez adott le tippet</span><br />
     <b>Pontszám (P):<br /></b><span>A játékosnak hány pontja van</span><br />*@
     <b>Telitalálat (TT): <br /> </b><span>Az eredmény tökéletes eltalálása</span><br />
-    <b>Gólkülönbség eltalálása (GK): <br /></b><span>A két csapat által megszerzett gólok különbségének eltalálása (csak ha a győztest is helyesen tippeltük meg)</span><br />
-    <b>Mérkőzés kimenetelének eltalálása (MK): <br /></b><span>A győztes csapat vagy a döntetlen eltalálása, 1-X-2, mint a TOTÓ-ban</span><br />
+    <b>Mérkőzés kimenetelének eltalálása (MK + CSG): <br /></b><span>A győztes és az egyik csapat által rúgott gólok számának eltalálása</span><br />
+    <b>Győztes és gólkülönbség eltalálása (MK + GK): <br /></b><span>A győztes és a gólok különbségének eltalálása</span><br />
+    <b>Győztes és gólkülönbség eltalálása döntetlen esetén(MK + GK (D)): <br /></b><span>Döntetlen eltalálása</span><br />
+    <b>Mérkőzés kimenetelének eltalálása (MK + OG): <br /></b><span>A győztes és az összes rúgott gól számának eltalálása</span><br />
+    <b>Mérkőzés kimenetelének eltalálása (MK): <br /></b><span>A győztes eltalálása</span><br />
     <b>Az egyik csapat góljainak eltalálása (CSG):<br /> </b><span>Bármely csapat által szerzett gólok eltalálása</span><br />
     <b>Összes szerzett gól számának eltalálása (ÖG):<br /></b><span>A mérkőzésen született összes gól számának eltalálása</span><br />
     <br />
@@ -142,11 +152,26 @@
 
 <table class="black-text" border="1" style="margin: 0 auto;">
     <tr>
+        <td colspan="4" style="width:30px; max-width:30px; text-align:center"></td>
+        <td style="width:35px; max-width:35px; text-align:center">@Bll.GuessPoint.TTPoint</td>
+        <td style="width:35px; max-width:35px; text-align:center">@Bll.GuessPoint.MKCSGPoint</td>
+        <td style="width:35px; max-width:35px; text-align:center">@Bll.GuessPoint.MKGKPoint</td>
+        <td style="width:35px; max-width:35px; text-align:center; word-break:break-word;">@Bll.GuessPoint.DrawMKPoint</td>
+        <td style="width:35px; max-width:35px; text-align:center; word-break:break-word;">@Bll.GuessPoint.MKOGPoint</td>
+        <td style="width:35px; max-width:35px; text-align:center; word-break:break-word;">@Bll.GuessPoint.MKPoint</td>
+        <td style="width:35px; max-width:35px; text-align:center; word-break:break-word;">@Bll.GuessPoint.CSGPoint</td>
+        <td style="width:35px; max-width:35px; text-align:center">@Bll.GuessPoint.OGPoint</td>
+    </tr>
+    <tr>
         <th style="width:30px; max-width:30px; text-align:center">H</th>
+        <th style="width:30px; max-width:30px; text-align:center">F</th>
         <th style="width:125px; max-width:125px; text-align:center">Játékos</th>
         <th style="width:35px; max-width:35px; text-align:center">T</th>
         <th style="width:35px; max-width:35px; text-align:center">TT</th>
-        <th style="width:35px; max-width:35px; text-align:center">GK</th>
+        <th style="width:35px; max-width:35px; text-align:center; word-break:break-word;">MK + CSG</th>
+        <th style="width:35px; max-width:35px; text-align:center; word-break:break-word;">MK + GK</th>
+        <th style="width:35px; max-width:35px; text-align:center; word-break:break-word;">MK + GK (D)</th>
+        <th style="width:35px; max-width:35px; text-align:center; word-break:break-word;">MK + OG</th>
         <th style="width:35px; max-width:35px; text-align:center">MK</th>
         <th style="width:35px; max-width:35px; text-align:center">CSG</th>
         <th style="width:35px; max-width:35px; text-align:center">ÖG</th>
@@ -155,9 +180,10 @@
 
     @{ List<PlayerStatModel> playerStatsModel = new List<PlayerStatModel>();}
 
-    @foreach (var m in Model.UsersWithGuesses)
+    @foreach (var m in Model.UsersWithGuessesAndStats)
     {
-        PlayerStatModel playerStats = GetPlayerStatsFromGuesses(m.Guesses.ToList(), false);
+        PlayerStatModel playerStats = m.PlayerStats;
+        //PlayerStatModel playerStats = GetPlayerStatsFromGuesses(m.Guesses.ToList(), false);
         playerStats.UserName = m.User.Name;
         playerStats.UserId = m.User.Id;
         playerStatsModel.Add(playerStats);
@@ -169,29 +195,37 @@
     {
         if (m.UserId == ViewBag.user.Id)
         {
-            <tr class="red-text">
+            <tr class="red-text" data-userid="@m.UserId">
                 <td>@(i++)</td>
+                <td></td>
                 <td style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td>@m.Count</td>
-                <td>@m.TT</td>
-                <td>@m.GK</td>
-                <td>@m.MK</td>
-                <td>@m.CSG</td>
-                <td>@m.OG</td>
+                <td class="tooltips" data-pointType="TT">@m.TT</td>
+                <td class="tooltips" data-pointType="MKCSG">@m.MKCSG</td>
+                <td class="tooltips" data-pointType="MKGK">@m.MKGK</td>
+                <td class="tooltips" data-pointType="MKGKDRAW">@m.MKGKDraw</td>
+                <td class="tooltips" data-pointType="MKOG">@m.MKOG</td>
+                <td class="tooltips" data-pointType="MK">@m.MK</td>
+                <td class="tooltips" data-pointType="CSG">@m.CSG</td>
+                <td class="tooltips" data-pointType="OG">@m.OG</td>
                 <td>@m.Points</td>
             </tr>
         }
         else
         {
-            <tr>
+            <tr data="@m.UserId">
                 <td>@(i++)</td>
+                <td></td>
                 <td>@m.UserName</td>
                 <td>@m.Count</td>
-                <td>@m.TT</td>
-                <td>@m.GK</td>
-                <td>@m.MK</td>
-                <td>@m.CSG</td>
-                <td>@m.OG</td>
+                <td class="tooltips" data-pointType="TT">@m.TT</td>
+                <td class="tooltips" data-pointType="MKCSG">@m.MKCSG</td>
+                <td class="tooltips" data-pointType="MKGK">@m.MKGK</td>
+                <td class="tooltips" data-pointType="MKGKDRAW">@m.MKGKDraw</td>
+                <td class="tooltips" data-pointType="MKOG">@m.MKOG</td>
+                <td class="tooltips" data-pointType="MK">@m.MK</td>
+                <td class="tooltips" data-pointType="CSG">@m.CSG</td>
+                <td class="tooltips" data-pointType="OG">@m.OG</td>
                 <td>@m.Points</td>
             </tr>
         }
@@ -200,15 +234,18 @@
 </table>
 <br />
 
-<div class="black-text" style="font-size:11px; text-align:left; margin-left: 2px">
+@*<div class="black-text" style="font-size:11px; text-align:left; margin-left: 2px">
     <b>TT: </b>@Bll.GuessPoint.TTPoint pont<br />
     <b>MK+CSG: </b>@Bll.GuessPoint.MKGKPoint pont<br />
     <b>MK+GK:(nem döntetlen esetén) </b>@Bll.GuessPoint.MKCSGPoint pont<br />
     <b>MK+GK:(döntetlen esetén) </b>@Bll.GuessPoint.DrawMKPoint pont<br />
     <b>MK+ÖG </b>@Bll.GuessPoint.MKOGPoint pont<br />
-    @*<b>GK: </b>6 pont <br />*@
     <b>MK: </b>@Bll.GuessPoint.MKPoint pont<br />
     <b>CSG: </b>@Bll.GuessPoint.CSGPoint pont<br />
     <b>ÖG: </b>@Bll.GuessPoint.OGPoint pont<br />
+</div>*@
+
+<div id="tooltip_content" style="display:none">
+    <h4>Rési Tamás</h4>
 </div>
 

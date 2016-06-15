@@ -15,6 +15,14 @@ namespace EC2016.Models
 
         public int MK { get; set; }
 
+        public int MKCSG { get; set; }
+
+        public int MKOG { get; set; }
+
+        public int MKGKDraw { get; set; }
+
+        public int MKGK { get; set; }
+
         public int CSG { get; set; }
 
         public int OG { get; set; }

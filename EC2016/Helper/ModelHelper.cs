@@ -135,5 +135,153 @@ namespace EC2016.Helper
             return teams;
         }
 
+        public class Wrapper
+        {
+            public PlayerStatModel PlayerStatModel { get; set; }
+
+            public PlayerMatchesWithGuesses PlayerMatchesWithGuesses { get; set; }
+        }
+
+        public static Wrapper GetPlayerStatsFromGuesses(IEnumerable<GuessModel> guesses, List<MatchModel> matches, bool isMax = false)
+        {
+            Wrapper wrapper = new Wrapper();
+
+            PlayerStatModel playerStats = new PlayerStatModel();
+            playerStats.Count = guesses.Count();
+            playerStats.Max = isMax;
+
+            PlayerMatchesWithGuesses playerMatchesWithGuesses = new PlayerMatchesWithGuesses();
+
+            foreach (var guess in guesses)
+            {
+                MatchModel match = matches.Where(m => m.Id == guess.MatchId).First();
+
+                if (match.HomeScore.HasValue) //game has been playing
+                {
+                    if (match.HomeScore.Value == guess.HomeScore && match.AwayScore.Value == guess.AwayScore)
+                    {
+                        playerStats.TT++;
+                        //playerStats.GK++;
+                        //playerStats.MK++;
+                        //playerStats.CSG++;
+                        //playerStats.OG++;
+                        playerStats.TTPoint += GuessPoint.TTPoint;
+                        playerMatchesWithGuesses.TTGuessesByMatch.Add(match.Id, guess.Id);
+                    }
+                    else
+                    {
+                        bool isGK = false;
+                        if (Math.Abs(match.HomeScore.Value - match.AwayScore.Value) == Math.Abs(guess.HomeScore - guess.AwayScore) &&
+                            ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore)
+                            || (match.HomeScore.Value <= match.AwayScore.Value && guess.HomeScore <= guess.AwayScore)))
+                        {
+                            //playerStats.GK++;
+                            isGK = true;
+                        }
+
+                        bool isMK = false;
+                        if ((match.HomeScore.Value > match.AwayScore.Value && guess.HomeScore > guess.AwayScore) ||
+                            (match.HomeScore.Value < match.AwayScore.Value && guess.HomeScore < guess.AwayScore) ||
+                            (match.HomeScore.Value == match.AwayScore.Value && guess.HomeScore == guess.AwayScore))
+                        {
+                            //playerStats.MK++;
+                            isMK = true;
+                        }
+
+                        bool isCSG = false;
+                        if (match.HomeScore.Value == guess.HomeScore || match.AwayScore.Value == guess.AwayScore)
+                        {
+                            //playerStats.CSG++;
+                            isCSG = true;
+                            //if (isMK)
+                            //{
+                            //    playerStats.Bonus += 2;
+                            //}
+                        }
+
+                        bool isOG = false;
+                        if (match.HomeScore.Value + match.AwayScore.Value == guess.HomeScore + guess.AwayScore)
+                        {
+                            //playerStats.OG++;
+                            isOG = true;
+                        }
+
+                        if (isMK && isCSG)
+                        {
+                            playerStats.MKCSGPoint += GuessPoint.MKCSGPoint;
+                            playerStats.MKCSG++;
+                            playerMatchesWithGuesses.MKCSGGuessesByMatch.Add(guess.Id, match.Id);
+
+                        }
+                        else
+                        {
+                            if (isMK && isGK)
+                            {
+                                if (match.HomeScore.Value == match.AwayScore.Value)
+                                {
+                                    playerStats.MKGKPoint += GuessPoint.DrawMKPoint;
+                                    playerStats.MKGKDraw++;
+                                    playerMatchesWithGuesses.MKGKDRAWGuessesByMatch.Add(guess.Id, match.Id);
+
+                                }
+                                else
+                                {
+                                    playerStats.MKGKPoint += GuessPoint.MKGKPoint;
+                                    playerStats.MKGK++;
+                                    playerMatchesWithGuesses.MKGKGuessesByMatch.Add(guess.Id, match.Id);
+                                }
+                            }
+                            else
+                            {
+                                if (isMK && isOG)
+                                {
+                                    playerStats.MKOGPoint += GuessPoint.MKOGPoint;
+                                    playerStats.MKOG++;
+                                    playerMatchesWithGuesses.MKOGGuessesByMatch.Add(guess.Id, match.Id);
+                                }
+                                else
+                                {
+                                    if (isMK)
+                                    {
+                                        playerStats.MKPoint += GuessPoint.MKPoint;
+                                        playerStats.MK++;
+                                        playerMatchesWithGuesses.MKGuessesByMatch.Add(guess.Id, match.Id);
+                                    }
+                                    else
+                                    {
+                                        if (isCSG)
+                                        {
+                                            playerStats.CSGPoint += GuessPoint.CSGPoint;
+                                            playerStats.CSG++;
+                                            playerMatchesWithGuesses.CSGGuessesByMatch.Add(guess.Id, match.Id);
+
+                                        }
+                                        else
+                                        {
+                                            if (isOG)
+                                            {
+                                                playerStats.OGPoint += GuessPoint.OGPoint;
+                                                playerStats.OG++;
+                                                playerMatchesWithGuesses.OGGuessesByMatch.Add(guess.Id, match.Id);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+            }
+
+            wrapper.PlayerStatModel = playerStats;
+            wrapper.PlayerMatchesWithGuesses = playerMatchesWithGuesses;
+
+            return wrapper;
+            //return playerStats;
+
+        }
+
     }
 }

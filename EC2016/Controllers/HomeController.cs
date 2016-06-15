@@ -35,6 +35,9 @@ namespace EC2016.Controllers
             List<TeamModel> teams;
             List<MatchModel> matches;
 
+            matches = DatabaseManager.GetAllMatches().Select(m => ModelHelper.CreateMatchModel(m)).ToList();
+            model.Matches = matches;
+
             switch (menu)
             {
                 case "guesses":
@@ -53,15 +56,20 @@ namespace EC2016.Controllers
                     teams = new List<TeamModel>();
                     IEnumerable<ApplicationUser> users = DatabaseManager.GetUsersByGuessGame(1);
 
-                    model.UsersWithGuesses = new List<IndexModel.UserGuesses>();
+                    model.UsersWithGuessesAndStats = new List<IndexModel.UserGuesses>();
                     foreach (var u in users)
                     {
                         IndexModel.UserGuesses ug = new IndexModel.UserGuesses();
                         ug.User = ModelHelper.CreateUserModel(u);
                         ug.Guesses = u.Guesses.Select(g => ModelHelper.CreateGuessModel(g));
+                        ModelHelper.Wrapper wrapper = ModelHelper.GetPlayerStatsFromGuesses(ug.Guesses, model.Matches, false);
+                        ug.PlayerStats = wrapper.PlayerStatModel;
+                        ug.PlayerMatchesWithGuesses = wrapper.PlayerMatchesWithGuesses;
 
-                        model.UsersWithGuesses.Add(ug);
+                        model.UsersWithGuessesAndStats.Add(ug);
                     }
+
+
 
                     break;
 
@@ -71,7 +79,6 @@ namespace EC2016.Controllers
                     break;
             }
 
-            matches = DatabaseManager.GetAllMatches().Select(m => ModelHelper.CreateMatchModel(m)).ToList();
             teams = DatabaseManager.GetAllTeam().Select(t => ModelHelper.CreateTeamModel(t)).ToList();
 
             model.ATeams = ModelHelper.CreateGorupTable(teams.Where(t => t.Group == "A").ToList(), matches);
@@ -80,8 +87,6 @@ namespace EC2016.Controllers
             model.DTeams = ModelHelper.CreateGorupTable(teams.Where(t => t.Group == "D").ToList(), matches);
             model.ETeams = ModelHelper.CreateGorupTable(teams.Where(t => t.Group == "E").ToList(), matches);
             model.FTeams = ModelHelper.CreateGorupTable(teams.Where(t => t.Group == "F").ToList(), matches);
-
-            model.Matches = matches;
 
             return View(model);
         }

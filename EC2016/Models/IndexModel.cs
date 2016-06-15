@@ -34,7 +34,7 @@ namespace EC2016.Models
             }
         }
 
-        public List<UserGuesses> UsersWithGuesses { get; set; }
+        public List<UserGuesses> UsersWithGuessesAndStats { get; set; }
 
         public class UserGuesses
         {
@@ -42,8 +42,13 @@ namespace EC2016.Models
 
             public IEnumerable<GuessModel> Guesses { get; set; }
 
+            public PlayerStatModel PlayerStats { get; set; }
+
+            public PlayerMatchesWithGuesses PlayerMatchesWithGuesses { get; set; }
+
 
         }
+
 
     }
 }

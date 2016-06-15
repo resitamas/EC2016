@@ -196,6 +196,7 @@
     <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MatchModel.cs" />
+    <Compile Include="Models\PlayerMatchesWithGuesses.cs" />
     <Compile Include="Models\PlayerStatModel.cs" />
     <Compile Include="Models\TeamModel.cs" />
     <Compile Include="Models\TournamentModel.cs" />

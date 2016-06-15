@@ -32,11 +32,11 @@ namespace EC2016
                       "~/Content/font-awesome.css",
                       "~/Content/site.css"));
 
-            bundles.Add(new StyleBundle("~/Content/tooltipster/").Include(
-                      "~/Content/tooltipster/tooltipster.bundle.css"));
+            bundles.Add(new StyleBundle("~/Content/tooltipster").Include(
+                      "~/Content/tooltipster/tooltipster.bundle.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/tooltipster").Include(
-                        "~/Scripts/tooltipster/tooltipster.bundle.js"));
+                        "~/Scripts/tooltipster/tooltipster.bundle.min.js"));
 
         }
     }
