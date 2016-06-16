@@ -1,4 +1,5 @@
 ﻿@using EC2016.Models;
+@using EC2016.Helper;
 @using System;
 @model IndexModel
 
@@ -159,6 +160,7 @@
     <b>Tippelések száma (T):<br /></b><span>A játékos hány meccshez adott le tippet</span><br />
     <b>Pontszám (P):<br /></b><span>A játékosnak hány pontja van</span><br />
     <b>Forma (F):<br /></b><span>A játékosnak hogyan alakult a pozíciója az utolsó 3 mérkőzés alatt</span><br />
+    <b>Teljes homály (XX):<br /></b><span>A játékos ezekért a meccsekért nem kapott pontot</span><br />
 </div>
 <br />
 
@@ -187,6 +189,7 @@
         <th class="borderleftandtop width35">MK</th>
         <th class="borderleftandtop width35">CSG</th>
         <th class="borderleftandtop width35">ÖG</th>
+        <th class="borderleftandtop width35">XX</th>
         <th class="borderleftandtopandright width35">P</th>
     </tr>
 
@@ -232,14 +235,15 @@
                 </td>
                 <td id="userName" class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td class="borderleftandtop">@m.Count</td>
-                <td class="tooltips borderleftandtop" data="TT">@m.TT</td>
-                <td class="tooltips borderleftandtop " data="MKCSG">@m.MKCSG</td>
-                <td class="tooltips borderleftandtop" data="MKGK">@m.MKGK</td>
-                <td class="tooltips borderleftandtop" data="MKGKDRAW">@m.MKGKDraw</td>
-                <td class="tooltips borderleftandtop" data="MKOG">@m.MKOG</td>
-                <td class="tooltips borderleftandtop" data="MK">@m.MK</td>
-                <td class="tooltips borderleftandtop" data="CSG">@m.CSG</td>
-                <td class="tooltips borderleftandtop" data="OG">@m.OG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.TT">@m.TT</td>
+                <td class="tooltips borderleftandtop " data="@ModelHelper.GuessType.MKCSG">@m.MKCSG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.MKGK">@m.MKGK</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.MKGKD">@m.MKGKDraw</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.MKOG">@m.MKOG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.MK">@m.MK</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.CSG">@m.CSG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.OG">@m.OG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.NONE">@m.NONE</td>
                 <td class="borderleftandtopandright">@m.Points</td>
             </tr>
         }
@@ -262,14 +266,15 @@
                 </td>
                 <td id="userName" class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td class="borderleftandtop">@m.Count</td>
-                <td class="tooltips borderleftandtop" data="TT">@m.TT</td>
-                <td class="tooltips borderleftandtop " data="MKCSG">@m.MKCSG</td>
-                <td class="tooltips borderleftandtop" data="MKGK">@m.MKGK</td>
-                <td class="tooltips borderleftandtop" data="MKGKDRAW">@m.MKGKDraw</td>
-                <td class="tooltips borderleftandtop" data="MKOG">@m.MKOG</td>
-                <td class="tooltips borderleftandtop" data="MK">@m.MK</td>
-                <td class="tooltips borderleftandtop" data="CSG">@m.CSG</td>
-                <td class="tooltips borderleftandtop" data="OG">@m.OG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.TT">@m.TT</td>
+                <td class="tooltips borderleftandtop " data="@ModelHelper.GuessType.MKCSG">@m.MKCSG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.MKGK">@m.MKGK</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.MKGKD">@m.MKGKDraw</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.MKOG">@m.MKOG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.MK">@m.MK</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.CSG">@m.CSG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.OG">@m.OG</td>
+                <td class="tooltips borderleftandtop" data="@ModelHelper.GuessType.NONE">@m.NONE</td>
                 <td class="borderleftandtopandright">@m.Points</td>
             </tr>
         }

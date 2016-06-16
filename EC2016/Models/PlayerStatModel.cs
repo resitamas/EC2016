@@ -27,6 +27,8 @@ namespace EC2016.Models
 
         public int OG { get; set; }
 
+        public int NONE { get; set; }
+
         public string UserName { get; set; }
 
         public string UserId { get; set; }

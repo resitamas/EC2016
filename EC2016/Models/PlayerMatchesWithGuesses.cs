@@ -18,6 +18,7 @@ namespace EC2016.Models
             MKGuessesByMatch = new Dictionary<int, int>();
             CSGGuessesByMatch = new Dictionary<int, int>();
             OGGuessesByMatch = new Dictionary<int, int>();
+            NONEGuessesByMatch = new Dictionary<int, int>();
         }
 
         public Dictionary<int,int> TTGuessesByMatch { get; set; }
@@ -28,6 +29,7 @@ namespace EC2016.Models
         public Dictionary<int,int> MKGuessesByMatch { get; set; }
         public Dictionary<int,int> CSGGuessesByMatch { get; set; }
         public Dictionary<int,int> OGGuessesByMatch { get; set; }
+        public Dictionary<int,int> NONEGuessesByMatch { get; set; }
 
     }
 }

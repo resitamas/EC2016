@@ -83,12 +83,24 @@ namespace Bll
             }
         }
         
-        public static List<Guess> GetGuessesByMatch(int matchId)
+        public static List<Guess> GetGuessesByMatchByGuessGame(int matchId, int guessGameId)
         {
             using (var db = new EC2016CodeFirst())
             {
+                List<Guess> guesses = new List<Guess>();
 
-                return db.Guesses.Include("User").Where(g => g.MatchId == matchId).ToList();
+                var guessGameUsers = db.GuessGames.Include("Users.Guesses").Where(g => g.Id == guessGameId).Select(g => g.Users).First();
+                foreach (var user in guessGameUsers)
+                {
+                    if (user.UserName != "Developer")
+                    {
+                        guesses.AddRange(user.Guesses.Where(g => g.MatchId == matchId));
+                    }
+                }
+
+                return guesses;
+
+                //return db.Guesses.Include("User").Where(g => g.MatchId == matchId).ToList();
 
             }
         }

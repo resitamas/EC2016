@@ -174,7 +174,7 @@ namespace EC2016.Controllers
         }
 
         [HttpGet]
-        public ActionResult GuessStatistic(string userId, string userName, string type)
+        public ActionResult GuessStatistic(string userId, string userName, ModelHelper.GuessType type)
         {
             GuessStatistic model = new GuessStatistic();
             model.UserName = userName;
@@ -189,58 +189,65 @@ namespace EC2016.Controllers
 
             switch (type)
             {
-                case "TT":
+                case ModelHelper.GuessType.TT:
 
                     model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.TTGuessesByMatch);
                     model.Type = "TT";
 
                     break;
 
-                case "MKCSG":
+                case ModelHelper.GuessType.MKCSG:
 
                     model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.MKCSGGuessesByMatch);
                     model.Type = "MK + CSG";
                     break;
 
-                case "MKGK":
+                case ModelHelper.GuessType.MKGK:
 
                     model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.MKGKGuessesByMatch);
                     model.Type = "MK + GK";
 
                     break;
 
-                case "MKGKDRAW":
+                case ModelHelper.GuessType.MKGKD:
 
                     model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.MKGKDRAWGuessesByMatch);
                     model.Type = "MK + GK (D)";
 
                     break;
 
-                case "MKOG":
+                case ModelHelper.GuessType.MKOG:
 
                     model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.MKOGGuessesByMatch);
                     model.Type = "MK + OG";
 
                     break;
 
-                case "MK":
+                case ModelHelper.GuessType.MK:
 
                     model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.MKGuessesByMatch);
                     model.Type = "MK";
 
                     break;
 
-                case "CSG":
+                case ModelHelper.GuessType.CSG:
 
                     model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.CSGGuessesByMatch);
                     model.Type = "CSG";
 
                     break;
 
-                case "OG":
+                case ModelHelper.GuessType.OG:
 
                     model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.OGGuessesByMatch);
                     model.Type = "OG";
+
+                    break;
+
+                case ModelHelper.GuessType.NONE:
+
+                    model.Stats = ModelHelper.GetStatHelpersFromPlayerMatchesWithGuesses(guesses, matches, wrapper.PlayerMatchesWithGuesses.NONEGuessesByMatch);
+                    model.Type = "XX";
 
                     break;
 
@@ -255,7 +262,7 @@ namespace EC2016.Controllers
         public ActionResult MatchGuessStatistic(int matchId)
         {
 
-            List<Guess> guesses = DatabaseManager.GetGuessesByMatch(matchId);
+            List<Guess> guesses = DatabaseManager.GetGuessesByMatchByGuessGame(matchId,1);
             Match match = DatabaseManager.GetMatchById(matchId,true);
 
             MatchGuessModel model = ModelHelper.CreateMatchGuessModel(guesses, match);

@@ -308,6 +308,11 @@ namespace EC2016.Helper
                                                 }
                                                 playerMatchesWithGuesses.OGGuessesByMatch.Add(guess.Id, match.Id);
                                             }
+                                            else
+                                            {
+                                                playerMatchesWithGuesses.NONEGuessesByMatch.Add(guess.Id, match.Id);
+                                                playerStatModel.NONE++;
+                                            }
                                         }
                                     }
                                 }
@@ -468,6 +473,11 @@ namespace EC2016.Helper
                         case GuessType.OG:
                             model.GuessList.ElementAt(7).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
                             break;
+
+                        case GuessType.NONE:
+                            model.GuessList.ElementAt(8).Add(GetShortUserName(guess.User.UserName) + " (" + guess.HomeScore + "-" + guess.AwayScore + ")");
+                            break;
+
                         default:
                             break;
                     }
