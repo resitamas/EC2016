@@ -9,7 +9,9 @@
         int indexBefore = before.IndexOf(before.Where(b => b.UserId == userId).First());
         int indexNow = now.IndexOf(now.Where(b => b.UserId == userId).First());
 
-        return indexBefore.CompareTo(indexNow);
+        return indexNow - indexBefore;
+
+        //return indexBefore.CompareTo(indexNow);
     }
 
 
@@ -156,6 +158,7 @@
     <br />
     <b>Tippelések száma (T):<br /></b><span>A játékos hány meccshez adott le tippet</span><br />
     <b>Pontszám (P):<br /></b><span>A játékosnak hány pontja van</span><br />
+    <b>Forma (F):<br /></b><span>A játékosnak hogyan alakult a pozíciója az utolsó 3 mérkőzés alatt</span><br />
 </div>
 <br />
 
@@ -173,7 +176,7 @@
     </tr>
     <tr>
         <th class="borderleftandtop" style="width:30px; max-width:30px; text-align:center">H</th>
-        <th class="borderleftandtop" style="width:30px; max-width:30px; text-align:center">F</th>
+        <th class="borderleftandtop" style="width:40px; max-width:40px; text-align:center">F</th>
         <th class="borderleftandtop" style="width:125px; max-width:125px; text-align:center">Játékos</th>
         <th class="borderleftandtop width35">T</th>
         <th class="borderleftandtop width35">TT</th>
@@ -213,9 +216,20 @@
     {
         if (m.UserId == ViewBag.user.Id)
         {
+            int positionChange = -1 * GetUserPositionChange(m.UserId, playerStatsModel, playerStatsModelBefore);
+
             <tr class="red-text" data="@m.UserId">
                 <td class="borderleftandtop" >@(i++)</td>
-                <td class="borderleftandtop"><div class="@(GetUserPositionChange(m.UserId,playerStatsModel, playerStatsModelBefore) > 0 ? "triangle-up" :  (GetUserPositionChange(m.UserId,playerStatsModel, playerStatsModelBefore) < 0 ? "triangle-down" : "rectangle"))" style="text-align:center"></div></td>
+                <td class="borderleftandtop">
+                    <div class="@(positionChange > 0 ? "blue-text" : (positionChange < 0 ? "red-text" : "yellow-text"))">
+                        <div class="@(positionChange > 0 ? "triangle-up" : (positionChange < 0 ? "triangle-down" : "rectangle"))" style="text-align:center; display:inline-block">
+                        </div>
+                        @if (positionChange != 0)
+                        {
+                            <span>@Math.Abs(positionChange)</span>
+                        }
+                    </div>
+                </td>
                 <td id="userName" class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td class="borderleftandtop">@m.Count</td>
                 <td class="tooltips borderleftandtop" data="TT">@m.TT</td>
@@ -231,10 +245,21 @@
         }
         else
         {
+            int positionChange = -1 * GetUserPositionChange(m.UserId, playerStatsModel, playerStatsModelBefore);
+
             <tr data="@m.UserId">
 
                 <td class="borderleftandtop">@(i++)</td>
-                <td class="borderleftandtop"><div class="@(GetUserPositionChange(m.UserId,playerStatsModel, playerStatsModelBefore) > 0 ? "triangle-up" :  (GetUserPositionChange(m.UserId,playerStatsModel, playerStatsModelBefore) < 0 ? "triangle-down" : "rectangle"))" style="text-align:center"></div></td>
+                <td class="borderleftandtop">
+                    <div class="@(positionChange > 0 ? "blue-text" : (positionChange < 0 ? "red-text" : "yellow-text"))">
+                        <div class="@(positionChange > 0 ? "triangle-up" : (positionChange < 0 ? "triangle-down" : "rectangle"))" style="text-align:center; display:inline-block">
+                        </div>
+                        @if (positionChange != 0)
+                        {
+                            <span>@Math.Abs(positionChange)</span>
+                        }
+                    </div>
+                </td>
                 <td id="userName" class="borderleftandtop" style="width:35px; max-width:35px; word-break:break-word">@m.UserName</td>
                 <td class="borderleftandtop">@m.Count</td>
                 <td class="tooltips borderleftandtop" data="TT">@m.TT</td>

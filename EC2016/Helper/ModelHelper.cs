@@ -153,7 +153,9 @@ namespace EC2016.Helper
             playerStatModel.Count = guesses.Count();
 
             PlayerStatModel playerStatModelBefore = new PlayerStatModel();
-            int lastId = matches.Where(m => m.HomeScore.HasValue).OrderBy(m => m.Date).Last().Id;
+            //int lastId = matches.Where(m => m.HomeScore.HasValue).OrderBy(m => m.Date).Last().Id;
+            IEnumerable<int> matchesTemp = matches.Where(m => m.HomeScore.HasValue).OrderBy(m => m.Date).Select(m => m.Id);
+            IEnumerable<int> lastIds = matchesTemp.Skip(matchesTemp.Count() - 3);
 
             PlayerMatchesWithGuesses playerMatchesWithGuesses = new PlayerMatchesWithGuesses();
 
@@ -167,7 +169,8 @@ namespace EC2016.Helper
                     {
                         playerStatModel.TT++;
                         playerStatModel.TTPoint += GuessPoint.TTPoint;
-                        if (match.Id != lastId)
+                        //if (match.Id != lastId)
+                        if (!lastIds.Contains(match.Id))
                         {
                             playerStatModelBefore.TT++;
                             playerStatModelBefore.TTPoint += GuessPoint.TTPoint;
@@ -216,7 +219,7 @@ namespace EC2016.Helper
                         {
                             playerStatModel.MKCSGPoint += GuessPoint.MKCSGPoint;
                             playerStatModel.MKCSG++;
-                            if (match.Id != lastId)
+                            if (!lastIds.Contains(match.Id))
                             {
                                 playerStatModelBefore.MKCSG++;
                                 playerStatModelBefore.MKCSGPoint += GuessPoint.MKCSGPoint;
@@ -232,7 +235,7 @@ namespace EC2016.Helper
                                 {
                                     playerStatModel.MKGKPoint += GuessPoint.DrawMKPoint;
                                     playerStatModel.MKGKDraw++;
-                                    if (match.Id != lastId)
+                                    if (!lastIds.Contains(match.Id))
                                     {
                                         playerStatModelBefore.MKGKPoint += GuessPoint.DrawMKPoint;
                                         playerStatModelBefore.MKGKDraw++;
@@ -244,7 +247,7 @@ namespace EC2016.Helper
                                 {
                                     playerStatModel.MKGKPoint += GuessPoint.MKGKPoint;
                                     playerStatModel.MKGK++;
-                                    if (match.Id != lastId)
+                                    if (!lastIds.Contains(match.Id))
                                     {
                                         playerStatModelBefore.MKGKPoint += GuessPoint.MKGKPoint;
                                         playerStatModelBefore.MKGK++;
@@ -258,7 +261,7 @@ namespace EC2016.Helper
                                 {
                                     playerStatModel.MKOGPoint += GuessPoint.MKOGPoint;
                                     playerStatModel.MKOG++;
-                                    if (match.Id != lastId)
+                                    if (!lastIds.Contains(match.Id))
                                     {
                                         playerStatModelBefore.MKOGPoint += GuessPoint.MKOGPoint;
                                         playerStatModelBefore.MKOG++;
@@ -271,7 +274,7 @@ namespace EC2016.Helper
                                     {
                                         playerStatModel.MKPoint += GuessPoint.MKPoint;
                                         playerStatModel.MK++;
-                                        if (match.Id != lastId)
+                                        if (!lastIds.Contains(match.Id))
                                         {
                                             playerStatModelBefore.MKPoint += GuessPoint.MKPoint;
                                             playerStatModelBefore.MK++;
@@ -284,7 +287,7 @@ namespace EC2016.Helper
                                         {
                                             playerStatModel.CSGPoint += GuessPoint.CSGPoint;
                                             playerStatModel.CSG++;
-                                            if (match.Id != lastId)
+                                            if (!lastIds.Contains(match.Id))
                                             {
                                                 playerStatModelBefore.CSGPoint += GuessPoint.CSGPoint;
                                                 playerStatModelBefore.CSG++;
@@ -298,7 +301,7 @@ namespace EC2016.Helper
                                             {
                                                 playerStatModel.OGPoint += GuessPoint.OGPoint;
                                                 playerStatModel.OG++;
-                                                if (match.Id != lastId)
+                                                if (!lastIds.Contains(match.Id))
                                                 {
                                                     playerStatModelBefore.OGPoint += GuessPoint.OGPoint;
                                                     playerStatModelBefore.OG++;
@@ -327,7 +330,7 @@ namespace EC2016.Helper
 
         public enum GuessType
         {
-            TT, MKCSG, MKGK, MKGKD, MKOG, MK, CSG, OG
+            TT, MKCSG, MKGK, MKGKD, MKOG, MK, CSG, OG, NONE
         }
 
         public static GuessType GetGuessType(Guess guess, Match match)
@@ -409,7 +412,7 @@ namespace EC2016.Helper
                                     }
                                     else
                                     {
-                                        return GuessType.OG;
+                                        return GuessType.NONE;
                                     }
                                 }
                             }

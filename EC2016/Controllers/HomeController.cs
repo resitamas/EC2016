@@ -16,6 +16,8 @@ namespace EC2016.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
+        private static object Lock = new object();
+
         public ActionResult Index(string menu = "guesses")
         {
 
@@ -109,44 +111,46 @@ namespace EC2016.Controllers
         [HttpPost]
         public ActionResult Guess(int matchId, int? homeScore, int? awayScore)
         {
-
-            if (DatabaseManager.GetMatchById(matchId).Date.AddMinutes(-5).CompareTo(DateTime.Now) < 0)
+            lock (Lock)
             {
-                //return RedirectToAction("Index", "Home");
-                //return Json(new { error = true});
+                if (DatabaseManager.GetMatchById(matchId).Date.AddMinutes(-5).CompareTo(DateTime.Now) < 0)
+                {
+                    //return RedirectToAction("Index", "Home");
+                    //return Json(new { error = true});
+                    return new JsonResult()
+                    {
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                        Data = new { id = matchId, error = true }
+                    };
+                }
+
+
+                int hScore = homeScore.HasValue ? homeScore.Value : 0;
+                int aScore = awayScore.HasValue ? awayScore.Value : 0;
+
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                if (user.Guesses.Select(g => g.MatchId).Contains(matchId))
+                {
+                    DatabaseManager.ModifyGuess(user.Id, matchId, hScore, aScore);
+                    //return RedirectToAction("Index", "Home");
+                    //return Json(new { homeGuess = hScore, awayGuess = awayScore});
+                    return new JsonResult()
+                    {
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                        Data = new { id = matchId, error = true, homeGuess = hScore, awayGuess = aScore }
+                    };
+                }
+
+                DatabaseManager.AddGuess(matchId, user.Id, hScore, aScore);
+
+                //return Json(new { homeGuess = hScore, awayGuess = awayScore });
+                //return RedirectToAction("Index","Home");
                 return new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new { id = matchId ,error = true }
+                    Data = new { id = matchId, error = true, homeGuess = hScore, awayGuess = aScore }
                 };
             }
-
-
-            int hScore = homeScore.HasValue ? homeScore.Value : 0;
-            int aScore = awayScore.HasValue ? awayScore.Value : 0;
-
-            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            if (user.Guesses.Select(g => g.MatchId).Contains(matchId))
-            {
-                DatabaseManager.ModifyGuess(user.Id, matchId, hScore, aScore);
-                //return RedirectToAction("Index", "Home");
-                //return Json(new { homeGuess = hScore, awayGuess = awayScore});
-                return new JsonResult()
-                {
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new { id = matchId, error = true , homeGuess = hScore, awayGuess = aScore}
-                };
-            }
-
-            DatabaseManager.AddGuess(matchId, user.Id, hScore, aScore);
-
-            //return Json(new { homeGuess = hScore, awayGuess = awayScore });
-            //return RedirectToAction("Index","Home");
-            return new JsonResult()
-            {
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                Data = new { id = matchId, error = true, homeGuess = hScore, awayGuess = aScore }
-            };
         }
 
 
