@@ -211,8 +211,8 @@
         }
 
         int i = 1;
-        playerStatsModel = playerStatsModel.OrderByDescending(p => p.Points).ThenByDescending(p => p.TTPoint).ThenByDescending(p => p.MKGKPoint + p.MKCSGPoint).ThenByDescending(p => p.MKOGPoint).ThenByDescending(p => p.MKPoint).ThenByDescending(p => p.CSGPoint).ThenByDescending(p => p.OGPoint).ThenBy(p => p.Count).ThenBy(p => p.UserName).ToList();
-        playerStatsModelBefore = playerStatsModelBefore.OrderByDescending(p => p.Points).ThenByDescending(p => p.TTPoint).ThenByDescending(p => p.MKGKPoint + p.MKCSGPoint).ThenByDescending(p => p.MKOGPoint).ThenByDescending(p => p.MKPoint).ThenByDescending(p => p.CSGPoint).ThenByDescending(p => p.OGPoint).ThenBy(p => p.Count).ThenBy(p => p.UserName).ToList();
+        playerStatsModel = playerStatsModel.OrderByDescending(p => p.Points).ThenByDescending(p => p.TT).ThenByDescending(p => p.MKCSG).ThenByDescending(p => p.MKGK).ThenByDescending(p => p.MKGKDraw).ThenByDescending(p => p.MKOGPoint).ThenByDescending(p => p.MKPoint).ThenByDescending(p => p.CSGPoint).ThenByDescending(p => p.OGPoint).ThenBy(p => p.Count).ThenBy(p => p.UserName).ToList();
+        playerStatsModelBefore = playerStatsModelBefore.OrderByDescending(p => p.Points).ThenByDescending(p => p.TT).ThenByDescending(p => p.MKCSG).ThenByDescending(p => p.MKGK).ThenByDescending(p => p.MKGKDraw).ThenByDescending(p => p.MKOGPoint).ThenByDescending(p => p.MKPoint).ThenByDescending(p => p.CSGPoint).ThenByDescending(p => p.OGPoint).ThenBy(p => p.Count).ThenBy(p => p.UserName).ToList();
     }
     @*@foreach (var m in playerStatsModel.OrderByDescending(p => p.Points).ThenByDescending(p => p.TT).ThenByDescending(p => p.GK).ThenByDescending(p => p.MK).ThenByDescending(p => p.CSG).ThenByDescending(p => p.OG).ThenBy(p => p.Count).ThenBy(p => p.UserName))*@
     @foreach (var m in playerStatsModel)
