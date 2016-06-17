@@ -28,6 +28,7 @@ namespace EC2016.Controllers
 
             //ApplicationUser user = DatabaseManager.GetUserById(User.Identity.GetUserId());
             ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            //System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().AddToRole(user.Id, "Administrator");
             ViewBag.User = user;
             ViewBag.menu = menu;
 

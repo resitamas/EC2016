@@ -266,6 +266,38 @@ namespace Bll
             }
         }
 
+        public static void ModifyMatch(int id, int tournamentId, int homeTeamId, int awayTeamId, DateTime date, string type, int? homeScore, int? awayScore, bool isComfired)
+        {
+            using (var db = new EC2016CodeFirst())
+            {
+                Match match = db.Matches.Where(m => m.Id == id).First();
+                match.TournamentId = tournamentId;
+                match.HomeTeamId = homeTeamId;
+                match.AwayTeamId = awayTeamId;
+                match.Date = date;
+                match.Type = type;
+                match.HomeScore = homeScore;
+                match.AwayScore = awayScore;
+                match.isConfirmed = isComfired;
+
+                var entry = db.Entry(match);
+                entry.Property(e => e.TournamentId).IsModified = true;
+                entry.Property(e => e.HomeTeamId).IsModified = true;
+                entry.Property(e => e.AwayTeamId).IsModified = true;
+                entry.Property(e => e.Date).IsModified = true;
+                entry.Property(e => e.Type).IsModified = true;
+                entry.Property(e => e.HomeScore).IsModified = true;
+                entry.Property(e => e.AwayScore).IsModified = true;
+                entry.Property(e => e.isConfirmed).IsModified = true;
+
+                db.SaveChanges();
+
+            }
+
+
+        }
+
+
         #endregion
 
     }

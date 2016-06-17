@@ -1,0 +1,58 @@
+﻿@model EC2016.Models.Admin.ModifyMatchModel
+@{
+    ViewBag.Title = "Mérkőzés módosítása";
+}
+
+@functions {
+
+    public IEnumerable<SelectListItem> GetTeams(EC2016.Models.MatchModel m, bool isHome)
+    {
+
+        List<SelectListItem> items = new List<SelectListItem>();
+        foreach (var team in Model.Teams)
+        {
+            items.Add(new SelectListItem
+            {
+                Value = team.Id.ToString(),
+                Text = team.Name,
+                Selected = isHome ? m.HomeTeamId == team.Id : m.AwayTeamId == team.Id
+            });
+        }
+
+        return items;
+
+    }
+
+}
+
+@{
+    int i = 0;
+    foreach (var match in Model.Matches)
+    {
+        using (Html.BeginForm("ModifyMatch", "Admin", FormMethod.Post))
+        {
+            @Html.Hidden("Id", match.Id);
+            @Html.Hidden("TournamentId", match.TournamentId);
+            @Html.Hidden("Date", match.Date);
+            @Html.Hidden("Type", match.Type);
+            <table border="1">
+                <tr>
+                    <td rowspan="2">@match.Date.ToShortDateString() @match.Date.ToShortTimeString()</td>
+                    <td>@Html.DropDownList("HomeTeamId", GetTeams(match,true))</td>
+                    <td>@Html.TextBox("HomeScore",Model.Matches.ElementAt(i).HomeScore)</td>
+                    <td rowspan="2" style="width:50px; text-align:center">@Html.CheckBox("IsConfirmed",Model.Matches.ElementAt(i).IsConfirmed)</td>
+                    <td rowspan="2" style="width:50px"><input type="submit" value="Módosít" /></td>
+                </tr>
+                <tr>
+                    <td>@Html.DropDownList("AwayTeamId", GetTeams(match, false))</td>
+                    <td>@Html.TextBox("AwayScore",Model.Matches.ElementAt(i).AwayScore)</td>
+                </tr>
+            </table>
+            <br />
+        }
+        i++;
+    }
+
+}
+
+
